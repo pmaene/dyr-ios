@@ -326,31 +326,14 @@ fi
 		<dict>
 			<key>children</key>
 			<array>
-				<string>F5B01DBE1AA356AA00EF2A2A</string>
-				<string>F5B01DC31AA356AA00EF2A2A</string>
-				<string>F5B01DC51AA356AA00EF2A2A</string>
-				<string>F5B01DC81AA356AA00EF2A2A</string>
-				<string>F5B01DCA1AA356AA00EF2A2A</string>
-				<string>F5B01DC01AA356AA00EF2A2A</string>
-				<string>F5B01DBC1AA356A900EF2A2A</string>
+				<string>F5B01DBD1AA356AA00EF2A2A</string>
+				<string>F5B01DE61AA367B500EF2A2A</string>
+				<string>F5B01DE11AA3675900EF2A2A</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
 			<key>path</key>
 			<string>Dyr</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>F5B01DBC1AA356A900EF2A2A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>F5B01DBD1AA356AA00EF2A2A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -641,6 +624,8 @@ fi
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>Supporting Files</string>
+			<key>path</key>
+			<string>Supporting Files</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -829,6 +814,8 @@ fi
 			</array>
 			<key>defaultConfigurationIsVisible</key>
 			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
@@ -881,6 +868,8 @@ fi
 			</array>
 			<key>defaultConfigurationIsVisible</key>
 			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
@@ -901,7 +890,7 @@ fi
 					<string>$(inherited)</string>
 				</array>
 				<key>INFOPLIST_FILE</key>
-				<string>DyrTests/Info.plist</string>
+				<string>DyrTests/Supporting Files/Info.plist</string>
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
 				<key>PRODUCT_NAME</key>
@@ -926,7 +915,7 @@ fi
 					<string>$(inherited)</string>
 				</array>
 				<key>INFOPLIST_FILE</key>
-				<string>DyrTests/Info.plist</string>
+				<string>DyrTests/Supporting Files/Info.plist</string>
 				<key>LD_RUNPATH_SEARCH_PATHS</key>
 				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
 				<key>PRODUCT_NAME</key>
@@ -938,6 +927,129 @@ fi
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
 			<string>Release</string>
+		</dict>
+		<key>F5B01DE11AA3675900EF2A2A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F5B01DE21AA3676700EF2A2A</string>
+				<string>F5B01DE31AA3677B00EF2A2A</string>
+				<string>F5B01DE41AA3678D00EF2A2A</string>
+				<string>F5B01DE51AA3679A00EF2A2A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Classes</string>
+			<key>path</key>
+			<string>Classes</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F5B01DE21AA3676700EF2A2A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F5B01DBE1AA356AA00EF2A2A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Application</string>
+			<key>path</key>
+			<string>Application</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F5B01DE31AA3677B00EF2A2A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F5B01DC31AA356AA00EF2A2A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Controllers</string>
+			<key>path</key>
+			<string>Controllers</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F5B01DE41AA3678D00EF2A2A</key>
+		<dict>
+			<key>children</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Library</string>
+			<key>path</key>
+			<string>Library</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F5B01DE51AA3679A00EF2A2A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F5B01DC01AA356AA00EF2A2A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Models</string>
+			<key>path</key>
+			<string>Models</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F5B01DE61AA367B500EF2A2A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F5B01DE71AA367BC00EF2A2A</string>
+				<string>F5B01DE81AA367C300EF2A2A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Resources</string>
+			<key>path</key>
+			<string>Resources</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F5B01DE71AA367BC00EF2A2A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F5B01DC81AA356AA00EF2A2A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Images</string>
+			<key>path</key>
+			<string>Images</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F5B01DE81AA367C300EF2A2A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F5B01DCA1AA356AA00EF2A2A</string>
+				<string>F5B01DC51AA356AA00EF2A2A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Storyboards</string>
+			<key>path</key>
+			<string>Storyboards</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>
