@@ -17,6 +17,8 @@
 		F5B01DD81AA356AA00EF2A2A /* DyrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DD71AA356AA00EF2A2A /* DyrTests.swift */; };
 		F5B01DEB1AA368D000EF2A2A /* Constants.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5B01DE91AA368D000EF2A2A /* Constants.plist */; };
 		F5B01DEC1AA368D000EF2A2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DEA1AA368D000EF2A2A /* Constants.swift */; };
+		F5B01DEF1AA36B8D00EF2A2A /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DED1AA36B8D00EF2A2A /* Event.swift */; };
+		F5B01DF01AA36B8D00EF2A2A /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DEE1AA36B8D00EF2A2A /* Person.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,8 @@
 		F5B01DD71AA356AA00EF2A2A /* DyrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DyrTests.swift; sourceTree = "<group>"; };
 		F5B01DE91AA368D000EF2A2A /* Constants.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Constants.plist; sourceTree = "<group>"; };
 		F5B01DEA1AA368D000EF2A2A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F5B01DED1AA36B8D00EF2A2A /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		F5B01DEE1AA36B8D00EF2A2A /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				F5B01DC01AA356AA00EF2A2A /* Dyr.xcdatamodeld */,
+				F5B01DED1AA36B8D00EF2A2A /* Event.swift */,
+				F5B01DEE1AA36B8D00EF2A2A /* Person.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -337,10 +343,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5B01DF01AA36B8D00EF2A2A /* Person.swift in Sources */,
 				F5B01DC41AA356AA00EF2A2A /* ViewController.swift in Sources */,
 				F5B01DBF1AA356AA00EF2A2A /* AppDelegate.swift in Sources */,
 				F5B01DC21AA356AA00EF2A2A /* Dyr.xcdatamodeld in Sources */,
 				F5B01DEC1AA368D000EF2A2A /* Constants.swift in Sources */,
+				F5B01DEF1AA36B8D00EF2A2A /* Event.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
