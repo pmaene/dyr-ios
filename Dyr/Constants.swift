@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Student IT vzw. All rights reserved.
 //
 
+import Foundation
+
 class Constants {
     let apiBaseUrl: String = {
         let constantsDictionary: NSDictionary = NSDictionary(contentsOfFile: "Constants.plist")!

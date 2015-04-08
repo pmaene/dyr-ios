@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C04C0FFA12F8E811F42858F7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F518E4DF1C3D3218A0A0436C /* libPods.a */; };
+		6EB7B5AFC73B1E16B83E9ACB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA2B2334A43F0BC8ED779D8 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F5B01DBF1AA356AA00EF2A2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DBE1AA356AA00EF2A2A /* AppDelegate.swift */; };
 		F5B01DC21AA356AA00EF2A2A /* Dyr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DC01AA356AA00EF2A2A /* Dyr.xcdatamodeld */; };
 		F5B01DC71AA356AA00EF2A2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5B01DC51AA356AA00EF2A2A /* Main.storyboard */; };
@@ -18,7 +18,6 @@
 		F5B01DEC1AA368D000EF2A2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DEA1AA368D000EF2A2A /* Constants.swift */; };
 		F5B01DEF1AA36B8D00EF2A2A /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DED1AA36B8D00EF2A2A /* Event.swift */; };
 		F5B01DF01AA36B8D00EF2A2A /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DEE1AA36B8D00EF2A2A /* Person.swift */; };
-		F5B01DFF1AA36D1900EF2A2A /* HTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DF21AA36D1900EF2A2A /* HTTPManager.swift */; };
 		F5B01E001AA36D1900EF2A2A /* UIColor+Dyr.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DF41AA36D1900EF2A2A /* UIColor+Dyr.swift */; };
 		F5B01E011AA36D1900EF2A2A /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DF51AA36D1900EF2A2A /* UIColor+HexString.swift */; };
 		F5B01E021AA36D1900EF2A2A /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DF71AA36D1900EF2A2A /* NavigationController.swift */; };
@@ -40,8 +39,8 @@
 
 /* Begin PBXFileReference section */
 		419C4D9471B7885CF629AD42 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		6EA2B2334A43F0BC8ED779D8 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3E96034FA962907D8502AD5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		F518E4DF1C3D3218A0A0436C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B01DB91AA356A900EF2A2A /* Dyr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dyr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B01DBD1AA356AA00EF2A2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5B01DBE1AA356AA00EF2A2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,14 +55,12 @@
 		F5B01DEA1AA368D000EF2A2A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F5B01DED1AA36B8D00EF2A2A /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		F5B01DEE1AA36B8D00EF2A2A /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		F5B01DF21AA36D1900EF2A2A /* HTTPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPManager.swift; sourceTree = "<group>"; };
 		F5B01DF41AA36D1900EF2A2A /* UIColor+Dyr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Dyr.swift"; sourceTree = "<group>"; };
 		F5B01DF51AA36D1900EF2A2A /* UIColor+HexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
 		F5B01DF71AA36D1900EF2A2A /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		F5B01DFA1AA36D1900EF2A2A /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		F5B01DFC1AA36D1900EF2A2A /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
 		F5B01DFE1AA36D1900EF2A2A /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
-		F5B01E061AA36D5200EF2A2A /* Dyr-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Dyr-Bridging-Header.h"; sourceTree = "<group>"; };
 		F5B01E071AA36E2C00EF2A2A /* DoorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C04C0FFA12F8E811F42858F7 /* libPods.a in Frameworks */,
+				6EB7B5AFC73B1E16B83E9ACB /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +95,7 @@
 		ACF3287F3613639442F127E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F518E4DF1C3D3218A0A0436C /* libPods.a */,
+				6EA2B2334A43F0BC8ED779D8 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,10 +125,9 @@
 			children = (
 				F5B01DE91AA368D000EF2A2A /* Constants.plist */,
 				F5B01DEA1AA368D000EF2A2A /* Constants.swift */,
-				F5B01E061AA36D5200EF2A2A /* Dyr-Bridging-Header.h */,
 				F5B01DBD1AA356AA00EF2A2A /* Info.plist */,
-				F5B01DE61AA367B500EF2A2A /* Resources */,
 				F5B01DE11AA3675900EF2A2A /* Classes */,
+				F5B01DE61AA367B500EF2A2A /* Resources */,
 			);
 			path = Dyr;
 			sourceTree = "<group>";
@@ -183,7 +179,6 @@
 		F5B01DE41AA3678D00EF2A2A /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				F5B01DF11AA36D1900EF2A2A /* AFNetworking */,
 				F5B01DF31AA36D1900EF2A2A /* Color */,
 				F5B01DF61AA36D1900EF2A2A /* Navigation */,
 				F5B01DF81AA36D1900EF2A2A /* TableView */,
@@ -226,14 +221,6 @@
 				F5B01DC51AA356AA00EF2A2A /* Main.storyboard */,
 			);
 			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		F5B01DF11AA36D1900EF2A2A /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				F5B01DF21AA36D1900EF2A2A /* HTTPManager.swift */,
-			);
-			path = AFNetworking;
 			sourceTree = "<group>";
 		};
 		F5B01DF31AA36D1900EF2A2A /* Color */ = {
@@ -298,6 +285,7 @@
 				F5B01DB61AA356A900EF2A2A /* Frameworks */,
 				F5B01DB71AA356A900EF2A2A /* Resources */,
 				9943818E7BBE9F5EADFBACB2 /* Copy Pods Resources */,
+				A1E903D52FC88E5BA42D8926 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -401,6 +389,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A1E903D52FC88E5BA42D8926 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DE8EC6B37A35483C2BEDBB2F /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -425,7 +428,6 @@
 			files = (
 				F5B01E011AA36D1900EF2A2A /* UIColor+HexString.swift in Sources */,
 				F5B01E031AA36D1900EF2A2A /* EventTableViewCell.swift in Sources */,
-				F5B01DFF1AA36D1900EF2A2A /* HTTPManager.swift in Sources */,
 				F5B01DF01AA36B8D00EF2A2A /* Person.swift in Sources */,
 				F5B01E001AA36D1900EF2A2A /* UIColor+Dyr.swift in Sources */,
 				F5B01DBF1AA356AA00EF2A2A /* AppDelegate.swift in Sources */,
@@ -563,7 +565,7 @@
 				INFOPLIST_FILE = Dyr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Dyr/Dyr-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
 		};
@@ -576,7 +578,7 @@
 				INFOPLIST_FILE = Dyr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Dyr/Dyr-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};

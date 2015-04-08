@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import Foundation
 import UIKit
 
 @UIApplicationMain
@@ -14,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        AFNetworkActivityIndicatorManager.sharedManager().enabled = true
         return true
     }
     
