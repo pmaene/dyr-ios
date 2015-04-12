@@ -8,14 +8,11 @@
 
 import Foundation
 
-class Constants {
-    let apiBaseUrl: String = {
-        let constantsDictionary: NSDictionary = NSDictionary(contentsOfFile: "Constants.plist")!
-        return constantsDictionary.objectForKey("APIBaseURL") as String
-    }()
-    
-    let apiClientID: String = {
-        let constantsDictionary: NSDictionary = NSDictionary(contentsOfFile: "Constants.plist")!
-        return constantsDictionary.objectForKey("APIClientID") as String
-    }()
+class Constants {    
+    class func value(key: String) -> String {
+        let constantsPath = NSBundle.mainBundle().pathForResource("Constants", ofType: "plist")!
+        let constantsDictionary: NSDictionary = NSDictionary(contentsOfFile: constantsPath)!
+        
+        return constantsDictionary.objectForKey(key) as! String
+    }
 }

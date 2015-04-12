@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Student IT vzw. All rights reserved.
 //
 
+import Alamofire
 import CoreData
 import UIKit
 
@@ -35,6 +36,13 @@ class DoorViewController: FetchedResultsTableViewController {
     }
     
     @IBAction func toggle(sender: UIBarButtonItem) {
+        Alamofire.request(DoorRouter.Switch(id: ""))
+            .responseSwiftyJSON {(_, _, json, error) in
+                if (error != nil) {
+                    NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
+                }
+            }
+        
         if (state == State.Closed) {
             sender.image = UIImage(named: "Close")
             state = State.Open
@@ -54,9 +62,9 @@ class DoorViewController: FetchedResultsTableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let event: Event = self.fetchedResultsController.objectAtIndexPath(indexPath) as Event
+        let event: Event = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Event
         
-        var cell: EventTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as EventTableViewCell
+        var cell: EventTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
         cell.updateOutletsWithEvent(event)
         
         return cell
