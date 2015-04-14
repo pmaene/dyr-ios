@@ -22,7 +22,7 @@ class OAuthClient {
         Alamofire.request(OAuthRouter.AccessTokenFromRefreshToken(refreshToken: self.accessToken!.refreshToken))
             .responseSwiftyJSON {(_, _, json, error) in
                 if (error == nil) {
-                    self.accessToken = OAuthAccessToken(jsonObject: json)
+                    self.accessToken = OAuthAccessToken(json: json)
                     self.accessToken!.save()
                     
                     NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))]: \(self.accessToken!)")

@@ -11,11 +11,11 @@ import Alamofire_SwiftyJSON
 import Foundation
 
 extension OAuthClient {
-    func accessTokenWithCredentials(username: String, password: String) {
+    func accessTokenWithCredentials(#username: String, password: String) {
         Alamofire.request(OAuthRouter.AccessTokenFromCredentials(username: username, password: password))
             .responseSwiftyJSON {(_, _, json, error) in
                 if (error == nil) {
-                    self.accessToken = OAuthAccessToken(jsonObject: json)
+                    self.accessToken = OAuthAccessToken(json: json)
                     self.accessToken!.save()
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientReceivedAccessTokenNotification, object: self.accessToken)

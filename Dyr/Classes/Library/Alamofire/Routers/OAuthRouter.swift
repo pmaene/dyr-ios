@@ -10,10 +10,10 @@ import Alamofire
 import Foundation
 
 enum OAuthRouter: URLRequestConvertible {
-    static let baseURL = Constants.value("APIBaseURL") + "/oauth"
+    static let baseURL = Constants.value(forKey: "APIBaseURL") + "/oauth"
     static let clientParameters: [String: AnyObject] = [
-        "client_id": Constants.value("APIClientID"),
-        "client_secret": Constants.value("APIClientSecret")
+        "client_id": Constants.value(forKey: "APIClientID"),
+        "client_secret": Constants.value(forKey: "APIClientSecret")
     ]
     
     case AccessTokenFromCredentials(username: String, password: String)

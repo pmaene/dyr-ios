@@ -10,10 +10,10 @@ import Alamofire
 import Foundation
 
 enum DoorRouter: URLRequestConvertible {
-    static let baseURL = Constants.value("APIBaseURL") + "/api/v1/accessories/doors"
+    static let baseURL = Constants.value(forKey: "APIBaseURL") + "/api/v1/accessories/doors"
     static let clientParameters: [String: AnyObject] = [
-        "client_id": Constants.value("APIClientID"),
-        "client_secret": Constants.value("APIClientSecret")
+        "client_id": Constants.value(forKey: "APIClientID"),
+        "client_secret": Constants.value(forKey: "APIClientSecret")
     ]
     
     case Switch(id: String)

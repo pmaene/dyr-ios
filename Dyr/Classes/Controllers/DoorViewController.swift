@@ -65,7 +65,7 @@ class DoorViewController: FetchedResultsTableViewController {
         let event: Event = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Event
         
         var cell: EventTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
-        cell.updateOutletsWithEvent(event)
+        cell.updateOutlets(event)
         
         return cell
     }

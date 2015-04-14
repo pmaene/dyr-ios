@@ -26,13 +26,13 @@ class OAuthAccessToken: Printable {
         return "<OAuthAccessToken accessToken:\(accessToken) expiresAt:\(expiresAt!) tokenType:\(tokenType!.rawValue) refreshToken:\(refreshToken)>"
     }
     
-    convenience init?(jsonObject: JSON) {
+    convenience init?(json: JSON) {
         self.init()
         
-        accessToken = jsonObject["access_token"].stringValue
-        expiresAt = NSDate(timeIntervalSinceNow: jsonObject["expires_in"].rawValue as! NSTimeInterval)
-        tokenType = TokenType(rawValue: jsonObject["token_type"].stringValue)!
-        refreshToken = jsonObject["refresh_token"].stringValue
+        accessToken = json["access_token"].stringValue
+        expiresAt = NSDate(timeIntervalSinceNow: json["expires_in"].rawValue as! NSTimeInterval)
+        tokenType = TokenType(rawValue: json["token_type"].stringValue)!
+        refreshToken = json["refresh_token"].stringValue
     }
 
     func hasExpired() -> Bool {

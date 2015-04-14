@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D131" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Accessory" representedClassName="PRODUCT_MODULE_NAME.Accessory" isAbstract="YES" syncable="YES">
+        <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" syncable="YES"/>
+    </entity>
+    <entity name="Door" representedClassName="PRODUCT_MODULE_NAME.Door" parentEntity="Accessory" syncable="YES"/>
     <entity name="Event" representedClassName="Event" syncable="YES">
         <attribute name="creationTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -13,5 +19,7 @@
     <elements>
         <element name="Event" positionX="-63" positionY="-18" width="128" height="88"/>
         <element name="Person" positionX="-54" positionY="18" width="128" height="88"/>
+        <element name="Accessory" positionX="-63" positionY="27" width="128" height="88"/>
+        <element name="Door" positionX="-54" positionY="36" width="128" height="45"/>
     </elements>
 </model>

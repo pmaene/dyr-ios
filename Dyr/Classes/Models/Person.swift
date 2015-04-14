@@ -7,14 +7,20 @@
 //
 
 import CoreData
+import Foundation
+import SwiftyJSON
 
 class Person: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var events: NSSet
     @NSManaged var identifier: NSNumber
     
-    func personWithJsonData(jsonData: NSDictionary, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Person {
-        var person: Person = Person()
+    class func insert(json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Person {
+        let person: Person = NSEntityDescription.insertNewObjectForEntityForName("Person", inManagedObjectContext: managedObjectContext) as! Person
+        
+        person.name = json["name"].stringValue
+        person.identifier = json["id"].numberValue
+        
         return person
     }
 }

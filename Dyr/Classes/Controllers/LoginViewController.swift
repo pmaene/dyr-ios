@@ -13,6 +13,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var password: UITextField!
     
     @IBAction func login(sender: AnyObject) {
-        OAuthClient.sharedClient.accessTokenWithCredentials(username.text, password: password.text)
+        OAuthClient.sharedClient.accessTokenWithCredentials(username: username.text, password: password.text)
     }
 }
