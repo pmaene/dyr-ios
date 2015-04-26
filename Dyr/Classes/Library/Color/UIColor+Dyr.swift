@@ -9,7 +9,19 @@
 import UIKit
 
 extension UIColor {
-    class func defaultInterfaceColor() -> UIColor {
+    class func primaryColor() -> UIColor {
         return UIColor(hex: "#607D8B")
+    }
+    
+    class func lightPrimaryColor() -> UIColor {
+        return UIColor(hex: "#FF5722")
+    }
+    
+    class func accentColor() -> UIColor {
+        return UIColor(hex: "#CFD8DC")
+    }
+    
+    class func secondaryTextColor() -> UIColor {
+        return UIColor(hex: "#727272")
     }
 }

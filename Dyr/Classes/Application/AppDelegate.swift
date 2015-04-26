@@ -16,13 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func presentLoginViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController!
+        let loginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
         
         window?.rootViewController = loginViewController
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        //presentLoginViewController()
+        let accessToken: OAuthAccessToken? = OAuthClient.sharedClient.accessToken
+        if (accessToken == nil) {
+            presentLoginViewController()
+        }
+        
         return true
     }
     
@@ -39,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var store = persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil, error: &error)
         if (store == nil) {
-            NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
+            NSLog("Error: \(error)")
             abort()
         }
         
@@ -53,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let managedObjectContext = self.managedObjectContext {
             var error: NSError? = nil
             if managedObjectContext.hasChanges && !managedObjectContext.save(&error) {
-                NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
+                NSLog("Error: \(error)")
                 abort()
             }
         }

@@ -23,12 +23,10 @@ class OAuthAccessToken: Printable {
     var refreshToken: String
     
     var description: String {
-        return "<OAuthAccessToken accessToken:\(accessToken) expiresAt:\(expiresAt!) tokenType:\(tokenType!.rawValue) refreshToken:\(refreshToken)>"
+        return "<OAuthAccessToken accessToken:\(accessToken) expiresAt:\(expiresAt) tokenType:\(tokenType?.rawValue) refreshToken:\(refreshToken)>"
     }
     
-    convenience init?(json: JSON) {
-        self.init()
-        
+    init(json: JSON) {        
         accessToken = json["access_token"].stringValue
         expiresAt = NSDate(timeIntervalSinceNow: json["expires_in"].rawValue as! NSTimeInterval)
         tokenType = TokenType(rawValue: json["token_type"].stringValue)!
@@ -36,6 +34,10 @@ class OAuthAccessToken: Printable {
     }
 
     func hasExpired() -> Bool {
+        if (expiresAt == nil) {
+            return true
+        }
+        
         return expiresAt!.compare(NSDate()) == NSComparisonResult.OrderedAscending;
     }
     
@@ -59,22 +61,23 @@ class OAuthAccessToken: Printable {
     }
     
     init?() {
-        if let data: [String: AnyObject]? = Lockbox.dictionaryForKey(OAuthKeychainKey) as? [String: AnyObject] {
-            accessToken = data!["accessToken"] as! String
+        accessToken = ""
+        expiresAt = nil
+        tokenType = nil
+        refreshToken = ""
+        
+        let data: [String: AnyObject]? = Lockbox.dictionaryForKey(OAuthKeychainKey) as? [String: AnyObject]
+        if (data != nil) {
+            accessToken = data?["accessToken"] as! String
             
-            // This is an ugly fix for Optionals mangling 
+            // TODO: This is an ugly fix for Optionals mangling
             let dateFormatter: NSDateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "%Y-%m-%d %H:%M:%S %z"
+            dateFormatter.dateFormat = "%Y-%M-%d %H:%m:%s %z"
             expiresAt = dateFormatter.dateFromString((data!["expiresAt"] as? String)!)
             
-            tokenType = TokenType(rawValue: data!["tokenType"] as! String)
-            refreshToken = data!["refreshToken"] as! String
+            tokenType = TokenType(rawValue: data?["tokenType"] as! String)
+            refreshToken = data?["refreshToken"] as! String
         } else {
-            accessToken = ""
-            expiresAt = nil
-            tokenType = nil
-            refreshToken = ""
-            
             return nil
         }
     }

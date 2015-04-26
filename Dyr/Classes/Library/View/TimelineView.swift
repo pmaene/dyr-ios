@@ -2,19 +2,48 @@
 //  TimelineView.swift
 //  Dyr
 //
-//  Created by Pieter Maene on 13/11/14.
-//  Copyright (c) 2014 Student IT vzw. All rights reserved.
+//  Created by Pieter Maene on 26/04/15.
+//  Copyright (c) 2015 Student IT vzw. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 class TimelineView: UIView {
-    override func drawRect(rect: CGRect) {
-        var contextRef: CGContextRef  = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(contextRef, 2.5)
-        CGContextSetStrokeColorWithColor(contextRef, UIColor.defaultInterfaceColor().CGColor)
-        var center: CGRect = CGRectMake(self.center.x, self.center.y, 5.0, 5.0)
+    lazy var lineView: UIView = {
+        let view = UIView(frame: self.frame)
         
-        CGContextStrokeEllipseInRect(contextRef, center)
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.backgroundColor = UIColor.accentColor()
+        
+        return view
+    }()
+    
+    lazy var circleView: UIView = {
+        let view = UIView()
+        
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.backgroundColor = UIColor.whiteColor()
+        view.layer.borderColor = UIColor.lightPrimaryColor().CGColor
+        view.layer.borderWidth = 2
+        view.layer.cornerRadius = 8
+        
+        return view
+    }()
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        addSubview(lineView)
+        
+        addConstraint(NSLayoutConstraint(item: lineView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: lineView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 2))
+        addConstraint(NSLayoutConstraint(item: lineView, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 1, constant: 0))
+        
+        addSubview(circleView)
+        
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 16))
+        addConstraint(NSLayoutConstraint(item: circleView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 16))
     }
 }

@@ -11,9 +11,11 @@ import Foundation
 import SwiftyJSON
 
 class Event: NSManagedObject {
-    @NSManaged var identifier: NSNumber
     @NSManaged var creationTime: NSDate
-    @NSManaged var person: Person
+    @NSManaged var identifier: String
+    
+    @NSManaged var accessory: Accessory
+    @NSManaged var user: User
     
     class func insert(json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Event {
         let event: Event = NSEntityDescription.insertNewObjectForEntityForName("Event", inManagedObjectContext: managedObjectContext) as! Event
@@ -21,19 +23,25 @@ class Event: NSManagedObject {
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
         
-        event.identifier = json["identifier"].numberValue
-        event.creationTime = dateFormatter.dateFromString(json["creationTime"].stringValue)!
+        event.creationTime = dateFormatter.dateFromString(json["creation_time"].stringValue)!
+        event.identifier = json["id"].stringValue
         
-        let request: NSFetchRequest = NSFetchRequest(entityName: "Person")
-        request.predicate = NSPredicate(format: "identifier = %@", json["person"]["id"].stringValue)
+        var request: NSFetchRequest = NSFetchRequest(entityName: "Accessory")
+        request.predicate = NSPredicate(format: "identifier = %@", json["accessory"].stringValue)
         
-        var error: NSError? = NSError?()
-        let person: Person? = managedObjectContext.executeFetchRequest(request, error: &error)!.last as? Person
+        let accessory: Accessory? = managedObjectContext.executeFetchRequest(request, error: nil)!.last as? Accessory
+        if (accessory != nil) {
+            event.accessory = accessory!
+        }
         
-        if (error != nil && person != nil) {
-            event.person = person!
+        request = NSFetchRequest(entityName: "User")
+        request.predicate = NSPredicate(format: "identifier = %@", json["user"]["id"].stringValue)
+        
+        let user: User? = managedObjectContext.executeFetchRequest(request, error: nil)!.last as? User
+        if (user != nil) {
+            event.user = user!
         } else {
-            event.person = Person.insert(json["person"], inManagedObjectContext: managedObjectContext)
+            event.user = User.insert(json["user"], inManagedObjectContext: managedObjectContext)
         }
         
         return event

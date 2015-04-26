@@ -11,7 +11,13 @@ import Foundation
 import SwiftyJSON
 
 class Door: Accessory {
-    override class func insert(json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Door {
-        return super.insert(json, inManagedObjectContext: managedObjectContext) as! Door
+    class func insert(json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Door {
+        let door: Door = NSEntityDescription.insertNewObjectForEntityForName("Door", inManagedObjectContext: managedObjectContext) as! Door
+        
+        door.identifier = json["id"].stringValue
+        door.name = json["name"].stringValue
+        door.descriptionString = json["description"].stringValue
+        
+        return door
     }
 }

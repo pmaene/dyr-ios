@@ -16,7 +16,7 @@ extension OAuthClient {
             .responseSwiftyJSON {(_, _, json, error) in
                 if (error == nil) {
                     self.accessToken = OAuthAccessToken(json: json)
-                    self.accessToken!.save()
+                    self.accessToken?.save()
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientReceivedAccessTokenNotification, object: self.accessToken)
                 } else {

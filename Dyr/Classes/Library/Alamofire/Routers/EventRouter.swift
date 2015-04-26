@@ -1,39 +1,34 @@
 //
-//  DoorRouter.swift
+//  EventRouter.swift
 //  Dyr
 //
-//  Created by Pieter Maene on 12/04/15.
+//  Created by Pieter Maene on 26/04/15.
 //  Copyright (c) 2015 Student IT vzw. All rights reserved.
 //
 
 import Alamofire
 import Foundation
 
-enum DoorRouter: URLRequestConvertible {
-    static let baseURL = Constants.value(forKey: "APIBaseURL") + "/api/v1/accessories/doors"
+enum EventRouter: URLRequestConvertible {
+    static let baseURL = Constants.value(forKey: "APIBaseURL") + "/api/v1/events"
     static let clientParameters: [String: AnyObject] = [
         "client_id": Constants.value(forKey: "APIClientID"),
         "client_secret": Constants.value(forKey: "APIClientSecret")
     ]
     
-    case Doors()
-    case Switch(door: Door)
+    case Events(door: Door)
     
     var method: Alamofire.Method {
         switch self {
-            case .Doors:
+            case .Events:
                 return .GET
-            case .Switch:
-                return .POST
         }
     }
     
     var path: String {
         switch self {
-            case .Doors:
+            case .Events:
                 return "/"
-            case .Switch:
-                return "/switch"
         }
     }
     
@@ -42,7 +37,7 @@ enum DoorRouter: URLRequestConvertible {
     var URLRequest: NSURLRequest {
         let encoding = Alamofire.ParameterEncoding.URL
         
-        let URL = NSURL(string: DoorRouter.baseURL)!
+        let URL = NSURL(string: EventRouter.baseURL)!
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
@@ -53,17 +48,11 @@ enum DoorRouter: URLRequestConvertible {
         
         let parameters: [String: AnyObject]? = {
             switch self {
-                case .Switch(let door):
-                    return ["id": door.identifier]
-                default:
-                    return nil
+                case .Events(let door):
+                    return ["door": door.identifier]
             }
         }()
         
-        if (parameters == nil) {
-            return encoding.encode(mutableURLRequest, parameters: DoorRouter.clientParameters + OAuthParameters).0
-        } else {
-            return encoding.encode(mutableURLRequest, parameters: DoorRouter.clientParameters + OAuthParameters + parameters!).0
-        }
+        return encoding.encode(mutableURLRequest, parameters: EventRouter.clientParameters + OAuthParameters + parameters!).0
     }
 }

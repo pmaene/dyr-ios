@@ -19,18 +19,16 @@ class OAuthClient {
     var accessToken: OAuthAccessToken? = OAuthAccessToken()
     
     func refreshAccessToken() {
-        Alamofire.request(OAuthRouter.AccessTokenFromRefreshToken(refreshToken: self.accessToken!.refreshToken))
+        Alamofire.request(OAuthRouter.AccessTokenFromRefreshToken(refreshToken: accessToken!.refreshToken))
             .responseSwiftyJSON {(_, _, json, error) in
                 if (error == nil) {
                     self.accessToken = OAuthAccessToken(json: json)
-                    self.accessToken!.save()
+                    self.accessToken?.save()
                     
-                    NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))]: \(self.accessToken!)")
-                    
-                    NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientRefreshedAccessTokenNotification, object: self.accessToken!)
+                    NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientRefreshedAccessTokenNotification, object: self.accessToken)
                 } else {
-                    NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken!)
-                    NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
+                    NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
+                    NSLog("Error: \(error), \(error?.userInfo)")
                 }
         }
     }

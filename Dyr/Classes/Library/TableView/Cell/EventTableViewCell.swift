@@ -14,12 +14,17 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
     func updateOutlets(event: Event) {
-        var dateFormatter: NSDateFormatter = NSDateFormatter()
+        let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        
+        dateLabel.text = dateFormatter.stringFromDate(event.creationTime)
+        
+        dateFormatter.dateStyle = NSDateFormatterStyle.NoStyle
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         
-        self.dateLabel.text = dateFormatter.stringFromDate(event.creationTime)
-        self.timeLabel.text = dateFormatter.stringFromDate(event.creationTime)
-        self.nameLabel.text = event.person.name
+        timeLabel.text = dateFormatter.stringFromDate(event.creationTime)
+        timeLabel.textColor = UIColor.secondaryTextColor()
+        
+        nameLabel.text = event.user.name
     }
 }

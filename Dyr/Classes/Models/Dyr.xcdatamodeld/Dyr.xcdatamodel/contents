@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D131" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Accessory" representedClassName="PRODUCT_MODULE_NAME.Accessory" isAbstract="YES" syncable="YES">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Accessory" representedClassName="Dyr.Accessory" isAbstract="YES" syncable="YES">
         <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="accessory" inverseEntity="Event" syncable="YES"/>
     </entity>
-    <entity name="Door" representedClassName="PRODUCT_MODULE_NAME.Door" parentEntity="Accessory" syncable="YES"/>
-    <entity name="Event" representedClassName="Event" syncable="YES">
+    <entity name="Door" representedClassName="Dyr.Door" parentEntity="Accessory" syncable="YES"/>
+    <entity name="Event" representedClassName="Dyr.Event" syncable="YES">
         <attribute name="creationTime" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="identifier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="events" inverseEntity="Person" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="accessory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Accessory" inverseName="events" inverseEntity="Accessory" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="events" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="Person" representedClassName="Person" syncable="YES">
-        <attribute name="identifier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    <entity name="User" representedClassName="Dyr.User" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="person" inverseEntity="Event" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="user" inverseEntity="Event" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Event" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="Person" positionX="-54" positionY="18" width="128" height="88"/>
-        <element name="Accessory" positionX="-63" positionY="27" width="128" height="88"/>
+        <element name="Accessory" positionX="-63" positionY="27" width="128" height="105"/>
         <element name="Door" positionX="-54" positionY="36" width="128" height="45"/>
+        <element name="Event" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="User" positionX="-54" positionY="18" width="128" height="90"/>
     </elements>
 </model>
