@@ -15,7 +15,7 @@ class EventTableViewCell: UITableViewCell {
     
     func updateOutlets(event: Event) {
         let dateFormatter: NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.dateFormat = NSDateFormatter.dateFormatFromTemplate("d/MM/YYYY", options: 0, locale: dateFormatter.locale)
         
         dateLabel.text = dateFormatter.stringFromDate(event.creationTime)
         
