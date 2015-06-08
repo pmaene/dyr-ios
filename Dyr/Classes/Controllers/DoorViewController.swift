@@ -47,7 +47,7 @@ class DoorViewController: FetchedResultsTableViewController {
             hideToggleButton()
             
             Alamofire.request(DoorRouter.Doors())
-                .responseSwiftyJSON {(_, _, json, error) in
+                .responseSwiftyJSON({(_, _, json, error) in
                     if (error == nil) {
                         if (json.count > 0) {
                             // TODO: Figure out what to do when a user has multiple doors
@@ -68,7 +68,7 @@ class DoorViewController: FetchedResultsTableViewController {
                     } else {
                         NSLog("Error: \(error), \(error!.userInfo)")
                     }
-            }
+            })
         } else {
             title = door!.descriptionString
             showToggleButton()
@@ -93,7 +93,7 @@ class DoorViewController: FetchedResultsTableViewController {
         dataRefreshing = true
         
         Alamofire.request(EventRouter.Events(door: door!))
-            .responseSwiftyJSON {(_, _, json, error) in
+            .responseSwiftyJSON({(_, _, json, error) in
                 if (error == nil) {
                     for (key: String, event: JSON) in json {
                         let request: NSFetchRequest = NSFetchRequest(entityName: "Event")
@@ -109,7 +109,7 @@ class DoorViewController: FetchedResultsTableViewController {
                 } else {
                     NSLog("Error: \(error), \(error!.userInfo)")
                 }
-            }
+            })
     }
     
     private func hideToggleButton() {
@@ -127,13 +127,13 @@ class DoorViewController: FetchedResultsTableViewController {
     
     @IBAction func toggle(sender: UIBarButtonItem) {
         Alamofire.request(DoorRouter.Switch(door: door!))
-            .responseSwiftyJSON {(_, _, json, error) in
+            .responseSwiftyJSON({(_, _, json, error) in
                 self.getLastEvents()
                 
                 if (error != nil) {
                     NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
                 }
-            }
+            })
         
         if (state == State.Closed) {
             sender.image = UIImage(named: "Close")

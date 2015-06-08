@@ -7,7 +7,6 @@
 //
 
 import Alamofire
-import Alamofire_SwiftyJSON
 import Foundation
 
 let OAuthClientReceivedAccessTokenNotification: String = "OAuthReceivedAccessTokenNotification"
@@ -20,7 +19,7 @@ class OAuthClient {
     
     func refreshAccessToken() {
         Alamofire.request(OAuthRouter.AccessTokenFromRefreshToken(refreshToken: accessToken!.refreshToken))
-            .responseSwiftyJSON {(_, _, json, error) in
+            .responseSwiftyJSON({(_, _, json, error) in
                 if (error == nil) {
                     self.accessToken = OAuthAccessToken(json: json)
                     self.accessToken?.save()
@@ -30,6 +29,6 @@ class OAuthClient {
                     NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
                     NSLog("Error: \(error), \(error?.userInfo)")
                 }
-        }
+        })
     }
 }
