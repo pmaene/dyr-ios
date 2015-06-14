@@ -12,7 +12,7 @@ import UIKit
 
 class FetchedResultsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     var managedObjectContext: NSManagedObjectContext? {
-        var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }
     
@@ -30,10 +30,10 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
     // MARK: - NSFetchedResultsControllerDelegate
     
     func performFetch() {
-        var error: NSError?
-        self.fetchedResultsController.performFetch(&error)
-        if (error != nil) {
-            NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
+        do {
+            try self.fetchedResultsController.performFetch()
+        } catch let error as NSError? {
+            fatalError("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
         }
         
         self.tableView.reloadData()
@@ -48,7 +48,7 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows: Int = 0
         if (self.fetchedResultsController.sections!.count > 0) {
-            var sectionInfo: NSFetchedResultsSectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+            let sectionInfo: NSFetchedResultsSectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
             rows = sectionInfo.numberOfObjects
         }
         
@@ -56,7 +56,7 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var sectionInfo: NSFetchedResultsSectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        let sectionInfo: NSFetchedResultsSectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
         return sectionInfo.name
     }
     
@@ -84,7 +84,7 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
         }
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: NSManagedObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch type {
         case NSFetchedResultsChangeType.Insert:
             self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)

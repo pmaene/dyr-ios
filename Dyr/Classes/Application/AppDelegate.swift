@@ -36,29 +36,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let managedObjectModel = NSManagedObjectModel(contentsOfURL: NSBundle.mainBundle().URLForResource("Dyr", withExtension: "momd")!)
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!)
         
-        let applicationDocumentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last as! NSURL
+        let applicationDocumentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last! as NSURL
         let storeURL = applicationDocumentsDirectory.URLByAppendingPathComponent("Dyr.sqlite")
         
         var error: NSError? = nil
         
-        var store = persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil, error: &error)
-        if (store == nil) {
+        var store: NSPersistentStore?
+        do {
+            store = try persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+        } catch var error as NSError {
+            store = nil
+            
             NSLog("Error: \(error)")
             abort()
+        } catch {
+            fatalError()
         }
         
         var managedObjectContext = NSManagedObjectContext()
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
         
         return managedObjectContext
-        }()
+    }()
     
     func saveContext () {
         if let managedObjectContext = self.managedObjectContext {
-            var error: NSError? = nil
-            if managedObjectContext.hasChanges && !managedObjectContext.save(&error) {
-                NSLog("Error: \(error)")
-                abort()
+            do {
+                if (managedObjectContext.hasChanges) {
+                    try managedObjectContext.save()
+                }
+            } catch {
+                fatalError()
             }
         }
     }

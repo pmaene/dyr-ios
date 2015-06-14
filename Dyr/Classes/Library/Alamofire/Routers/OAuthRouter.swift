@@ -42,7 +42,7 @@ enum OAuthRouter: URLRequestConvertible {
     var URLRequest: NSURLRequest {
         let encoding = Alamofire.ParameterEncoding.URL
         
-        let (path: String, parameters: [String: AnyObject]?) = {
+        let (path, parameters): (String, [String: AnyObject]?) = {
             switch self {
                 case .AccessTokenFromCredentials(let username, let password):
                     return ("/token", ["username": username, "password": password, "grant_type": "password"])

@@ -12,7 +12,7 @@ class TimelineView: UIView {
     lazy var lineView: UIView = {
         let view = UIView(frame: self.frame)
         
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.accentColor()
         
         return view
@@ -21,7 +21,7 @@ class TimelineView: UIView {
     lazy var circleView: UIView = {
         let view = UIView()
         
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.whiteColor()
         view.layer.borderColor = UIColor.lightPrimaryColor().CGColor
         view.layer.borderWidth = 2

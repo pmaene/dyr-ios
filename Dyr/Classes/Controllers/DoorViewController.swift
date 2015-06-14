@@ -35,14 +35,18 @@ class DoorViewController: FetchedResultsTableViewController {
         
         let request: NSFetchRequest = NSFetchRequest(entityName: "Door")
         
-        var error: NSError? = NSError?()
-        let results: [Door]? = managedObjectContext!.executeFetchRequest(request, error: &error) as! [Door]?
-        
+        var results: [Door]
+        do {
+            results = try managedObjectContext!.executeFetchRequest(request) as! [Door]
+        } catch let error as NSError? {
+            fatalError("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
+        }
+            
         // TODO: Allow the user to select the correct door...
-        if (results!.count > 1) {}
-        
-        door = results?.last
-        
+        if (results.count > 1) {}
+            
+        door = results.last
+            
         if (door == nil) {
             hideToggleButton()
             
@@ -52,23 +56,24 @@ class DoorViewController: FetchedResultsTableViewController {
                         if (json.count > 0) {
                             // TODO: Figure out what to do when a user has multiple doors
                             if (json.count > 1) {}
-                        
+                                
                             self.door = Door.insert(json[0], inManagedObjectContext: self.managedObjectContext!)
-                        
-                            self.managedObjectContext?.save(nil)
+                            
+                            try! self.managedObjectContext?.save()
+                                    
                             self.initFetchedResultsController()
-                        
+                                    
                             if (self.door != nil) {
                                 self.title = self.door!.descriptionString
                                 self.showToggleButton()
-                            
+                                        
                                 self.getLastEvents()
                             }
                         }
                     } else {
                         NSLog("Error: \(error), \(error!.userInfo)")
                     }
-            })
+                })
         } else {
             title = door!.descriptionString
             showToggleButton()
@@ -76,7 +81,7 @@ class DoorViewController: FetchedResultsTableViewController {
     }
     
     private func initFetchedResultsController() {
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Event")
+        let fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Event")
         if (door != nil) {
             fetchRequest.predicate = NSPredicate(format: "accessory == %@", door!)
         }
@@ -95,16 +100,19 @@ class DoorViewController: FetchedResultsTableViewController {
         Alamofire.request(EventRouter.Events(door: door!))
             .responseSwiftyJSON({(_, _, json, error) in
                 if (error == nil) {
-                    for (key: String, event: JSON) in json {
+                    for (_, event): (String, JSON) in json {
                         let request: NSFetchRequest = NSFetchRequest(entityName: "Event")
                         request.predicate = NSPredicate(format: "identifier = %@", event["id"].stringValue)
                         
-                        if (self.managedObjectContext!.executeFetchRequest(request, error: nil)!.count == 0) {
+                        
+                        let results: [Event] = try! self.managedObjectContext!.executeFetchRequest(request) as! [Event]
+                        if (results.count == 0) {
                             Event.insert(event, inManagedObjectContext: self.managedObjectContext!)
                         }
                     }
                     
-                    self.managedObjectContext?.save(nil)
+                    try! self.managedObjectContext?.save()
+                    
                     self.dataRefreshing = false
                 } else {
                     NSLog("Error: \(error), \(error!.userInfo)")
@@ -168,7 +176,7 @@ class DoorViewController: FetchedResultsTableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let event: Event = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Event
         
-        var cell: EventTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
+        let cell: EventTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
         cell.updateOutlets(event)
         
         return cell

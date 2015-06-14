@@ -29,7 +29,7 @@ class Event: NSManagedObject {
         var request: NSFetchRequest = NSFetchRequest(entityName: "Accessory")
         request.predicate = NSPredicate(format: "identifier = %@", json["accessory"].stringValue)
         
-        let accessory: Accessory? = managedObjectContext.executeFetchRequest(request, error: nil)!.last as? Accessory
+        let accessory: Accessory? = (try! managedObjectContext.executeFetchRequest(request)).last as? Accessory
         if (accessory != nil) {
             event.accessory = accessory!
         }
@@ -37,7 +37,7 @@ class Event: NSManagedObject {
         request = NSFetchRequest(entityName: "User")
         request.predicate = NSPredicate(format: "identifier = %@", json["user"]["id"].stringValue)
         
-        let user: User? = managedObjectContext.executeFetchRequest(request, error: nil)!.last as? User
+        let user: User? = (try! managedObjectContext.executeFetchRequest(request)).last as? User
         if (user != nil) {
             event.user = user!
         } else {

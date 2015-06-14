@@ -10,7 +10,7 @@ import Alamofire
 import Foundation
 
 extension OAuthClient {
-    func accessTokenWithCredentials(#username: String, password: String) {
+    func accessTokenWithCredentials(username username: String, password: String) {
         Alamofire.request(OAuthRouter.AccessTokenFromCredentials(username: username, password: password))
             .responseSwiftyJSON({(_, _, json, error) in
                 if (error == nil) {

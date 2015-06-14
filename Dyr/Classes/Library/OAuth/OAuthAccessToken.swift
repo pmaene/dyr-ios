@@ -16,7 +16,7 @@ enum TokenType: String {
 
 let OAuthKeychainKey: String = "OAuthAccessToken"
 
-class OAuthAccessToken: Printable {
+class OAuthAccessToken: CustomStringConvertible {
     var accessToken: String
     var expiresAt: NSDate?
     var tokenType: TokenType?
@@ -26,7 +26,7 @@ class OAuthAccessToken: Printable {
         return "<OAuthAccessToken accessToken:\(accessToken) expiresAt:\(expiresAt) tokenType:\(tokenType?.rawValue) refreshToken:\(refreshToken)>"
     }
     
-    init(json: JSON) {        
+    init(json: JSON) {
         accessToken = json["access_token"].stringValue
         expiresAt = NSDate(timeIntervalSinceNow: json["expires_in"].rawValue as! NSTimeInterval)
         tokenType = TokenType(rawValue: json["token_type"].stringValue)!
