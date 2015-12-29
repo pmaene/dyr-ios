@@ -34,7 +34,7 @@ enum EventRouter: URLRequestConvertible {
     
     // MARK: - URLRequestConvertible
     
-    var URLRequest: NSURLRequest {
+    var URLRequest: NSMutableURLRequest {
         let encoding = Alamofire.ParameterEncoding.URL
         
         let URL = NSURL(string: EventRouter.baseURL)!

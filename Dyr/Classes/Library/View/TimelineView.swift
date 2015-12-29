@@ -30,7 +30,7 @@ class TimelineView: UIView {
         return view
     }()
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         addSubview(lineView)

@@ -27,7 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             presentLoginViewController()
         }
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "OAuthClientFailed:", name: OAuthClientFailedNotification, object: nil)
+        
         return true
+    }
+    
+    func OAuthClientFailed(notification: NSNotification) {
+        presentLoginViewController()
     }
     
     // MARK: - Core Data Stack

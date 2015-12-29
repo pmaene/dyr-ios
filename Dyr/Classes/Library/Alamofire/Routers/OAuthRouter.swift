@@ -39,7 +39,7 @@ enum OAuthRouter: URLRequestConvertible {
     
     // MARK: - URLRequestConvertible
     
-    var URLRequest: NSURLRequest {
+    var URLRequest: NSMutableURLRequest {
         let encoding = Alamofire.ParameterEncoding.URL
         
         let (path, parameters): (String, [String: AnyObject]?) = {

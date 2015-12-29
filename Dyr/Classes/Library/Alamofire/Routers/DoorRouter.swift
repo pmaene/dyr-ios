@@ -39,7 +39,7 @@ enum DoorRouter: URLRequestConvertible {
     
     // MARK: - URLRequestConvertible
     
-    var URLRequest: NSURLRequest {
+    var URLRequest: NSMutableURLRequest {
         let encoding = Alamofire.ParameterEncoding.URL
         
         let URL = NSURL(string: DoorRouter.baseURL)!
