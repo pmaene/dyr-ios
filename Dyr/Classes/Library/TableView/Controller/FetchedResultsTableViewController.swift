@@ -3,7 +3,7 @@
 //  Dyr
 //
 //  Created by Pieter Maene on 13/11/14.
-//  Copyright (c) 2014 Student IT vzw. All rights reserved.
+//  Copyright (c) 2014. All rights reserved.
 //
 
 import CoreData
@@ -84,7 +84,7 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
         }
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: NSManagedObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch type {
         case NSFetchedResultsChangeType.Insert:
             self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)

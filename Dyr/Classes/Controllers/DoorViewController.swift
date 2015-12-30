@@ -3,7 +3,7 @@
 //  Dyr
 //
 //  Created by Pieter Maene on 08/11/14.
-//  Copyright (c) 2014 Student IT vzw. All rights reserved.
+//  Copyright (c) 2014. All rights reserved.
 //
 
 import Alamofire

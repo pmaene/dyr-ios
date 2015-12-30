@@ -3,7 +3,7 @@
 //  Dyr
 //
 //  Created by Pieter Maene on 12/04/15.
-//  Copyright (c) 2015 Student IT vzw. All rights reserved.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 import Alamofire
@@ -39,7 +39,7 @@ enum OAuthRouter: URLRequestConvertible {
     
     // MARK: - URLRequestConvertible
     
-    var URLRequest: NSURLRequest {
+    var URLRequest: NSMutableURLRequest {
         let encoding = Alamofire.ParameterEncoding.URL
         
         let (path, parameters): (String, [String: AnyObject]?) = {

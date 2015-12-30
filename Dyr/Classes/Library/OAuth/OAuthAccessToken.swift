@@ -3,7 +3,7 @@
 //  Dyr
 //
 //  Created by Pieter Maene on 12/04/15.
-//  Copyright (c) 2015 Student IT vzw. All rights reserved.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 import Foundation

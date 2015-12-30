@@ -3,7 +3,7 @@
 //  Dyr
 //
 //  Created by Pieter Maene on 12/04/15.
-//  Copyright (c) 2015 Student IT vzw. All rights reserved.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 import Alamofire
@@ -21,6 +21,13 @@ class OAuthClient {
         Alamofire.request(OAuthRouter.AccessTokenFromRefreshToken(refreshToken: accessToken!.refreshToken))
             .responseSwiftyJSON({(_, _, json, error) in
                 if (error == nil) {
+                    if let error = json["error"].string {
+                        if error == "invalid_grant" {
+                            self.accessToken?.remove()
+                            NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
+                        }
+                    }
+                    
                     self.accessToken = OAuthAccessToken(json: json)
                     self.accessToken?.save()
                     
