@@ -3,7 +3,7 @@
 //  AlamofireSwiftyJSON
 //
 //  Created by Pinglin Tang on 14-9-22.
-//  Copyright (c) 2014. All rights reserved.
+//  Copyright (c) 2014 SwiftyJSON. All rights reserved.
 //
 
 import Foundation
