@@ -5,4 +5,4 @@ use_frameworks!
 
 pod "Alamofire"
 pod "Lockbox"
-pod "SwiftyJSON", :git => "https://github.com/SwiftyJSON/SwiftyJSON.git", :branch => "xcode7"
+pod "SwiftyJSON"

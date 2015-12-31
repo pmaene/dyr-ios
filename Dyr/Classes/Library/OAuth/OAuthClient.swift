@@ -34,7 +34,7 @@ class OAuthClient {
                     NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientRefreshedAccessTokenNotification, object: self.accessToken)
                 } else {
                     NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
-                    NSLog("Error: \(error), \(error?.userInfo)")
+                    NSLog("Error: \(error), \((error as? NSError)!.userInfo)")
                 }
         })
     }

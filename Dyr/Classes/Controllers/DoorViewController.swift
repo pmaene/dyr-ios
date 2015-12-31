@@ -71,7 +71,7 @@ class DoorViewController: FetchedResultsTableViewController {
                             }
                         }
                     } else {
-                        NSLog("Error: \(error), \(error!.userInfo)")
+                        NSLog("Error: \(error), \((error as? NSError)?.userInfo)")
                     }
                 })
         } else {
@@ -115,7 +115,7 @@ class DoorViewController: FetchedResultsTableViewController {
                     
                     self.dataRefreshing = false
                 } else {
-                    NSLog("Error: \(error), \(error!.userInfo)")
+                    NSLog("Error: \(error), \((error as? NSError)?.userInfo)")
                 }
             })
     }
@@ -139,7 +139,7 @@ class DoorViewController: FetchedResultsTableViewController {
                 self.getLastEvents()
                 
                 if (error != nil) {
-                    NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
+                    NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \((error as? NSError)!.userInfo)")
                 }
             })
         
