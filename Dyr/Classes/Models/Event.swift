@@ -18,7 +18,7 @@ class Event: NSManagedObject {
     @NSManaged var user: User
     
     class func insert(json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Event {
-        let event: Event = NSEntityDescription.insertNewObjectForEntityForName("Event", inManagedObjectContext: managedObjectContext) as! Event
+        let event = NSEntityDescription.insertNewObjectForEntityForName("Event", inManagedObjectContext: managedObjectContext) as! Event
         
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"

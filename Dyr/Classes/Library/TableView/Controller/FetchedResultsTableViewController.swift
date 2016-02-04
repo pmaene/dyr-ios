@@ -12,7 +12,7 @@ import UIKit
 
 class FetchedResultsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     var managedObjectContext: NSManagedObjectContext? {
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }
     
@@ -48,7 +48,7 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows: Int = 0
         if (self.fetchedResultsController.sections!.count > 0) {
-            let sectionInfo: NSFetchedResultsSectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
+            let sectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
             rows = sectionInfo.numberOfObjects
         }
         
@@ -56,7 +56,7 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionInfo: NSFetchedResultsSectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
+        let sectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
         return sectionInfo.name
     }
     
@@ -73,28 +73,28 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
         let indexSet = NSIndexSet(index: sectionIndex)
         switch type {
-        case NSFetchedResultsChangeType.Insert:
-            self.tableView.insertSections(indexSet, withRowAnimation: UITableViewRowAnimation.Fade)
-        case NSFetchedResultsChangeType.Delete:
-            self.tableView.deleteSections(indexSet, withRowAnimation: UITableViewRowAnimation.Fade)
-        case NSFetchedResultsChangeType.Update:
-            break
-        case NSFetchedResultsChangeType.Move:
-            break
+            case NSFetchedResultsChangeType.Insert:
+                self.tableView.insertSections(indexSet, withRowAnimation: UITableViewRowAnimation.Fade)
+            case NSFetchedResultsChangeType.Delete:
+                self.tableView.deleteSections(indexSet, withRowAnimation: UITableViewRowAnimation.Fade)
+            case NSFetchedResultsChangeType.Update:
+                break
+            case NSFetchedResultsChangeType.Move:
+                break
         }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch type {
-        case NSFetchedResultsChangeType.Insert:
-            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-        case NSFetchedResultsChangeType.Delete:
-            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-        case NSFetchedResultsChangeType.Update:
-            self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-        case NSFetchedResultsChangeType.Move:
-            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+            case NSFetchedResultsChangeType.Insert:
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+            case NSFetchedResultsChangeType.Delete:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+            case NSFetchedResultsChangeType.Update:
+                self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+            case NSFetchedResultsChangeType.Move:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
         }
     }
 }

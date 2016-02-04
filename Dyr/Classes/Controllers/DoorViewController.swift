@@ -33,7 +33,7 @@ class DoorViewController: FetchedResultsTableViewController {
             }
         }
         
-        let request: NSFetchRequest = NSFetchRequest(entityName: "Door")
+        let request = NSFetchRequest(entityName: "Door")
         
         var results: [Door]
         do {
@@ -81,7 +81,7 @@ class DoorViewController: FetchedResultsTableViewController {
     }
     
     private func initFetchedResultsController() {
-        let fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Event")
+        let fetchRequest = NSFetchRequest(entityName: "Event")
         if (door != nil) {
             fetchRequest.predicate = NSPredicate(format: "accessory == %@", door!)
         }
@@ -101,11 +101,10 @@ class DoorViewController: FetchedResultsTableViewController {
             .responseSwiftyJSON({(_, _, json, error) in
                 if (error == nil) {
                     for (_, event): (String, JSON) in json {
-                        let request: NSFetchRequest = NSFetchRequest(entityName: "Event")
+                        let request = NSFetchRequest(entityName: "Event")
                         request.predicate = NSPredicate(format: "identifier = %@", event["id"].stringValue)
                         
-                        
-                        let results: [Event] = try! self.managedObjectContext!.executeFetchRequest(request) as! [Event]
+                        let results = try! self.managedObjectContext!.executeFetchRequest(request) as! [Event]
                         if (results.count == 0) {
                             Event.insert(event, inManagedObjectContext: self.managedObjectContext!)
                         }
@@ -174,9 +173,8 @@ class DoorViewController: FetchedResultsTableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let event: Event = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Event
-        
-        let cell: EventTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
+        let event = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Event
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
         cell.updateOutlets(event)
         
         return cell

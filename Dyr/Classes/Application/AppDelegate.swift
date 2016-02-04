@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let accessToken: OAuthAccessToken? = OAuthClient.sharedClient.accessToken
+        let accessToken = OAuthClient.sharedClient.accessToken
         if (accessToken == nil) {
             presentLoginViewController()
         }

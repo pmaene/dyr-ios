@@ -14,7 +14,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
     func updateOutlets(event: Event) {
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = NSDateFormatter.dateFormatFromTemplate("d/MM/YYYY", options: 0, locale: dateFormatter.locale)
         
         dateLabel.text = dateFormatter.stringFromDate(event.creationTime)

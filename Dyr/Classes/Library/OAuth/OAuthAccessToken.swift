@@ -66,12 +66,12 @@ class OAuthAccessToken: CustomStringConvertible {
         tokenType = nil
         refreshToken = ""
         
-        let data: [String: AnyObject]? = Lockbox.dictionaryForKey(OAuthKeychainKey) as? [String: AnyObject]
+        let data = Lockbox.dictionaryForKey(OAuthKeychainKey) as? [String: AnyObject]
         if (data != nil) {
             accessToken = data?["accessToken"] as! String
             
             // TODO: This is an ugly fix for Optionals mangling
-            let dateFormatter: NSDateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "%Y-%M-%d %H:%m:%s %z"
             expiresAt = dateFormatter.dateFromString((data!["expiresAt"] as? String)!)
             

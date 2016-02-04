@@ -41,7 +41,7 @@ enum EventRouter: URLRequestConvertible {
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
-        var OAuthParameters: [String: AnyObject] = Dictionary<String, AnyObject>()
+        var OAuthParameters = Dictionary<String, AnyObject>()
         if let accessToken = OAuthClient.sharedClient.accessToken {
             OAuthParameters = ["access_token": accessToken.accessToken]
         }

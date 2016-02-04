@@ -15,7 +15,7 @@ let OAuthClientFailedNotification: String = "OAuthFailedNotification"
 
 class OAuthClient {
     static let sharedClient = OAuthClient()
-    var accessToken: OAuthAccessToken? = OAuthAccessToken()
+    var accessToken = OAuthAccessToken()
     
     func refreshAccessToken() {
         Alamofire.request(OAuthRouter.AccessTokenFromRefreshToken(refreshToken: accessToken!.refreshToken))
