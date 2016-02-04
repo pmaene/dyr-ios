@@ -1,8 +1,13 @@
-source "https://github.com/CocoaPods/Specs.git"
-
-platform :ios, "8.0"
+platform :ios, '8.0'
 use_frameworks!
 
-pod "Alamofire"
-pod "Lockbox"
-pod "SwiftyJSON"
+target 'Dyr' do
+    pod 'Alamofire'
+    pod 'Lockbox'
+    pod 'SwiftyJSON'
+end
+
+target 'DyrTests' do
+
+end
+

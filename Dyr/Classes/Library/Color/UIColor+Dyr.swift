@@ -9,16 +9,20 @@
 import UIKit
 
 extension UIColor {
-    class func primaryColor() -> UIColor {
+    class func baseColor() -> UIColor {
         return UIColor(hex: "#607D8B")
     }
     
-    class func lightPrimaryColor() -> UIColor {
-        return UIColor(hex: "#FF5722")
+    class func lightBaseColor() -> UIColor {
+        return UIColor(hex: "#CFD8DC")
     }
     
     class func accentColor() -> UIColor {
-        return UIColor(hex: "#CFD8DC")
+        return UIColor(hex: "#FF5722")
+    }
+    
+    class func primaryTextColor() -> UIColor {
+        return UIColor.blackColor()
     }
     
     class func secondaryTextColor() -> UIColor {

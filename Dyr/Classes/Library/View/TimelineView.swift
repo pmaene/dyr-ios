@@ -13,7 +13,7 @@ class TimelineView: UIView {
         let view = UIView(frame: self.frame)
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.accentColor()
+        view.backgroundColor = UIColor.lightBaseColor()
         
         return view
     }()
@@ -23,7 +23,7 @@ class TimelineView: UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.whiteColor()
-        view.layer.borderColor = UIColor.lightPrimaryColor().CGColor
+        view.layer.borderColor = UIColor.accentColor().CGColor
         view.layer.borderWidth = 2
         view.layer.cornerRadius = 8
         

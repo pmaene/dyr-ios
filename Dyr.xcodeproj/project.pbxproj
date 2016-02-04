@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		294B493A4BB043030129D447 /* Pods_Dyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102319FF9BDD597FCCDCFC69 /* Pods_Dyr.framework */; };
 		6EB7B5AFC73B1E16B83E9ACB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA2B2334A43F0BC8ED779D8 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F500CC9A1ADAC38100F04786 /* OAuthClient+Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F500CC991ADAC38100F04786 /* OAuthClient+Credentials.swift */; };
 		F500CC9E1ADADD3900F04786 /* DoorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F500CC9D1ADADD3900F04786 /* DoorRouter.swift */; };
@@ -63,8 +64,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		102319FF9BDD597FCCDCFC69 /* Pods_Dyr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dyr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		419C4D9471B7885CF629AD42 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6EA2B2334A43F0BC8ED779D8 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		992FA69B46418B0D6D263C55 /* Pods-Dyr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dyr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dyr/Pods-Dyr.release.xcconfig"; sourceTree = "<group>"; };
+		BD7CC5E7409143248C131038 /* Pods-Dyr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dyr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dyr/Pods-Dyr.debug.xcconfig"; sourceTree = "<group>"; };
 		D3E96034FA962907D8502AD5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F500CC991ADAC38100F04786 /* OAuthClient+Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OAuthClient+Credentials.swift"; sourceTree = "<group>"; };
 		F500CC9D1ADADD3900F04786 /* DoorRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoorRouter.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EB7B5AFC73B1E16B83E9ACB /* Pods.framework in Frameworks */,
+				294B493A4BB043030129D447 /* Pods_Dyr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +131,8 @@
 			children = (
 				419C4D9471B7885CF629AD42 /* Pods.debug.xcconfig */,
 				D3E96034FA962907D8502AD5 /* Pods.release.xcconfig */,
+				BD7CC5E7409143248C131038 /* Pods-Dyr.debug.xcconfig */,
+				992FA69B46418B0D6D263C55 /* Pods-Dyr.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -134,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				6EA2B2334A43F0BC8ED779D8 /* Pods.framework */,
+				102319FF9BDD597FCCDCFC69 /* Pods_Dyr.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -480,7 +488,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dyr/Pods-Dyr-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A1E903D52FC88E5BA42D8926 /* Embed Pods Frameworks */ = {
@@ -495,7 +503,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dyr/Pods-Dyr-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DE8EC6B37A35483C2BEDBB2F /* Check Pods Manifest.lock */ = {
@@ -680,7 +688,7 @@
 		};
 		F5B01DDC1AA356AA00EF2A2A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 419C4D9471B7885CF629AD42 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = BD7CC5E7409143248C131038 /* Pods-Dyr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -698,7 +706,7 @@
 		};
 		F5B01DDD1AA356AA00EF2A2A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D3E96034FA962907D8502AD5 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 992FA69B46418B0D6D263C55 /* Pods-Dyr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

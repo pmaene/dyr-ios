@@ -13,7 +13,7 @@ class NavigationController: UINavigationController {
         super.viewDidLoad()
         
         self.navigationBar.barStyle = UIBarStyle.Black
-        self.navigationBar.barTintColor = UIColor.primaryColor()
+        self.navigationBar.barTintColor = UIColor.baseColor()
         self.navigationBar.tintColor = UIColor.whiteColor()
     }
 }
