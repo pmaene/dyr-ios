@@ -13,14 +13,19 @@ extension OAuthClient {
     func accessTokenWithCredentials(username username: String, password: String) {
         Alamofire.request(OAuthRouter.AccessTokenFromCredentials(username: username, password: password))
             .responseSwiftyJSON({(_, _, json, error) in
-                if (error == nil) {
-                    self.accessToken = OAuthAccessToken(json: json)
-                    self.accessToken?.save()
-                    
-                    NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientReceivedAccessTokenNotification, object: self.accessToken)
+                if error == nil {
+                    if json["error"].string == nil {
+                        if let accessToken = OAuthAccessToken(json: json) {
+                            accessToken.save()
+                        }
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientReceivedAccessTokenNotification, object: self.accessToken)
+                    } else {
+                        NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
+                    }
                 } else {
                     NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
-                    NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \((error as? NSError)!.userInfo)")
+                    NSLog("[\(String(self)), \(#function))] Error: \(error), \((error as? NSError)!.userInfo)")
                 }
         })
     }

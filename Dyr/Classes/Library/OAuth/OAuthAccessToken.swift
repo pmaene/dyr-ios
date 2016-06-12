@@ -26,18 +26,29 @@ class OAuthAccessToken: CustomStringConvertible {
         return "<OAuthAccessToken accessToken:\(accessToken) expiresAt:\(expiresAt) tokenType:\(tokenType?.rawValue) refreshToken:\(refreshToken)>"
     }
     
-    init(json: JSON) {
-        accessToken = json["access_token"].stringValue
-        expiresAt = NSDate(timeIntervalSinceNow: json["expires_in"].rawValue as! NSTimeInterval)
-        tokenType = TokenType(rawValue: json["token_type"].stringValue)!
-        refreshToken = json["refresh_token"].stringValue
+    init?() {
+        if let data = Lockbox.unarchiveObjectForKey(OAuthKeychainKey) as? [String: AnyObject] {
+            accessToken = data["accessToken"] as! String
+            expiresAt = data["expiresAt"] as? NSDate
+            tokenType = TokenType(rawValue: data["tokenType"] as! String)
+            refreshToken = data["refreshToken"] as! String
+        } else {
+            return nil
+        }
+    }
+    
+    init?(json: JSON) {
+        if json != nil {
+            accessToken = json["access_token"].stringValue
+            expiresAt = NSDate(timeIntervalSinceNow: json["expires_in"].rawValue as! NSTimeInterval)
+            tokenType = TokenType(rawValue: json["token_type"].stringValue)!
+            refreshToken = json["refresh_token"].stringValue
+        } else {
+            return nil
+        }
     }
 
     func hasExpired() -> Bool {
-        if (expiresAt == nil) {
-            return true
-        }
-        
         return expiresAt!.compare(NSDate()) == NSComparisonResult.OrderedAscending;
     }
     
@@ -51,34 +62,12 @@ class OAuthAccessToken: CustomStringConvertible {
             "refreshToken": refreshToken
         ]
         
-        Lockbox.setDictionary(data, forKey: OAuthKeychainKey)
+        Lockbox.archiveObject(data, forKey: OAuthKeychainKey)
         
-        NSLog("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Saved to Keychain")
+        NSLog("[\(String(self)), \(#function))] Saved to Keychain")
     }
     
     func remove() {
-        Lockbox.setDictionary(nil, forKey: OAuthKeychainKey)
-    }
-    
-    init?() {
-        accessToken = ""
-        expiresAt = nil
-        tokenType = nil
-        refreshToken = ""
-        
-        let data = Lockbox.dictionaryForKey(OAuthKeychainKey) as? [String: AnyObject]
-        if (data != nil) {
-            accessToken = data?["accessToken"] as! String
-            
-            // TODO: This is an ugly fix for Optionals mangling
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "%Y-%M-%d %H:%m:%s %z"
-            expiresAt = dateFormatter.dateFromString((data!["expiresAt"] as? String)!)
-            
-            tokenType = TokenType(rawValue: data?["tokenType"] as! String)
-            refreshToken = data?["refreshToken"] as! String
-        } else {
-            return nil
-        }
+        Lockbox.archiveObject(nil, forKey: OAuthKeychainKey)
     }
 }

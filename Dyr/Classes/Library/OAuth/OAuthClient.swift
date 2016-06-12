@@ -15,26 +15,35 @@ let OAuthClientFailedNotification: String = "OAuthFailedNotification"
 
 class OAuthClient {
     static let sharedClient = OAuthClient()
-    var accessToken = OAuthAccessToken()
+    var accessToken: OAuthAccessToken? {
+        get {
+            if let accessToken = OAuthAccessToken() {
+                if !accessToken.hasExpired() {
+                    return accessToken
+                }
+            }
+            
+            return nil
+        }
+    }
     
     func refreshAccessToken() {
-        Alamofire.request(OAuthRouter.AccessTokenFromRefreshToken(refreshToken: accessToken!.refreshToken))
+        Alamofire.request(OAuthRouter.AccessTokenFromRefreshToken(refreshToken: self.accessToken!.refreshToken))
             .responseSwiftyJSON({(_, _, json, error) in
-                if (error == nil) {
-                    if let error = json["error"].string {
-                        if error == "invalid_grant" {
-                            self.accessToken?.remove()
-                            NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
+                if error == nil {
+                    if json["error"].string == nil {
+                        if let accessToken = OAuthAccessToken(json: json) {
+                            accessToken.save()
                         }
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientRefreshedAccessTokenNotification, object: self.accessToken)
+                    } else {
+                        self.accessToken?.remove()
+                        NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
                     }
-                    
-                    self.accessToken = OAuthAccessToken(json: json)
-                    self.accessToken?.save()
-                    
-                    NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientRefreshedAccessTokenNotification, object: self.accessToken)
                 } else {
                     NSNotificationCenter.defaultCenter().postNotificationName(OAuthClientFailedNotification, object: self.accessToken)
-                    NSLog("Error: \(error), \((error as? NSError)!.userInfo)")
+                    NSLog("[\(String(self)), \(#function))] Error: \(error), \((error as? NSError)!.userInfo)")
                 }
         })
     }

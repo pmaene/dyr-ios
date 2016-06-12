@@ -30,7 +30,7 @@ class Event: NSManagedObject {
         request.predicate = NSPredicate(format: "identifier = %@", json["accessory"].stringValue)
         
         let accessory: Accessory? = (try! managedObjectContext.executeFetchRequest(request)).last as? Accessory
-        if (accessory != nil) {
+        if accessory != nil {
             event.accessory = accessory!
         }
         
@@ -38,7 +38,7 @@ class Event: NSManagedObject {
         request.predicate = NSPredicate(format: "identifier = %@", json["user"]["id"].stringValue)
         
         let user: User? = (try! managedObjectContext.executeFetchRequest(request)).last as? User
-        if (user != nil) {
+        if user != nil {
             event.user = user!
         } else {
             event.user = User.insert(json["user"], inManagedObjectContext: managedObjectContext)

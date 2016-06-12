@@ -33,7 +33,7 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
         do {
             try self.fetchedResultsController.performFetch()
         } catch let error as NSError? {
-            fatalError("[\(NSStringFromClass(self.dynamicType)), \(__FUNCTION__))] Error: \(error), \(error!.userInfo)")
+            fatalError("[\(String(self)), \(#function))] Error: \(error), \(error!.userInfo)")
         }
         
         self.tableView.reloadData()
@@ -47,7 +47,7 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows: Int = 0
-        if (self.fetchedResultsController.sections!.count > 0) {
+        if self.fetchedResultsController.sections!.count > 0 {
             let sectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
             rows = sectionInfo.numberOfObjects
         }

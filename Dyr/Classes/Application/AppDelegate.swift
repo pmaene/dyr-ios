@@ -21,19 +21,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = loginViewController
     }
     
+    func OAuthClientFailed(notification: NSNotification) {
+        presentLoginViewController()
+    }
+    
+    // MARK: - UIApplicationDelegate
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let accessToken = OAuthClient.sharedClient.accessToken
-        if (accessToken == nil) {
+        if OAuthClient.sharedClient.accessToken == nil {
             presentLoginViewController()
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "OAuthClientFailed:", name: OAuthClientFailedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.OAuthClientFailed(_:)), name: OAuthClientFailedNotification, object: nil)
         
         return true
-    }
-    
-    func OAuthClientFailed(notification: NSNotification) {
-        presentLoginViewController()
     }
     
     // MARK: - Core Data Stack
@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch var error as NSError {
             store = nil
             
-            NSLog("Error: \(error)")
+            NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
             abort()
         } catch {
             fatalError()
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func saveContext () {
         if let managedObjectContext = self.managedObjectContext {
             do {
-                if (managedObjectContext.hasChanges) {
+                if managedObjectContext.hasChanges {
                     try managedObjectContext.save()
                 }
             } catch {

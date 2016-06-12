@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="y1P-CV-cYq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="y1P-CV-cYq">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -96,7 +96,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="No Connection" id="jUz-2k-020">
-                        <barButtonItem key="rightBarButtonItem" image="Open" id="4mM-gF-Soe">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" image="Open" id="4mM-gF-Soe">
                             <connections>
                                 <action selector="toggle:" destination="r0W-b2-tWH" id="Hzq-Tg-Ows"/>
                             </connections>
@@ -139,7 +139,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KoS-Tn-zTV">
-                                <rect key="frame" x="175" y="247" width="250" height="106"/>
+                                <rect key="frame" x="175" y="147" width="250" height="106"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cwb-qT-zZk">
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="30"/>
@@ -192,7 +192,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="KoS-Tn-zTV" secondAttribute="centerY" id="0Sg-Ed-kDs"/>
+                            <constraint firstAttribute="centerY" secondItem="KoS-Tn-zTV" secondAttribute="centerY" constant="100" id="0Sg-Ed-kDs"/>
                             <constraint firstAttribute="centerX" secondItem="KoS-Tn-zTV" secondAttribute="centerX" id="J2D-dO-Wi1"/>
                         </constraints>
                     </view>

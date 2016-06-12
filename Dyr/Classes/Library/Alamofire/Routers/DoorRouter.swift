@@ -60,7 +60,7 @@ enum DoorRouter: URLRequestConvertible {
             }
         }()
         
-        if (parameters == nil) {
+        if parameters == nil {
             return encoding.encode(mutableURLRequest, parameters: DoorRouter.clientParameters + OAuthParameters).0
         } else {
             return encoding.encode(mutableURLRequest, parameters: DoorRouter.clientParameters + OAuthParameters + parameters!).0

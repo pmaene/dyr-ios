@@ -28,6 +28,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "presentNavigationController:", name: OAuthClientReceivedAccessTokenNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.presentNavigationController(_:)), name: OAuthClientReceivedAccessTokenNotification, object: nil)
     }
 }

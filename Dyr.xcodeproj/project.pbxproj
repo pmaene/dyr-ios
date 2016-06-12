@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		294B493A4BB043030129D447 /* Pods_Dyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102319FF9BDD597FCCDCFC69 /* Pods_Dyr.framework */; };
-		6EB7B5AFC73B1E16B83E9ACB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA2B2334A43F0BC8ED779D8 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F500CC9A1ADAC38100F04786 /* OAuthClient+Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F500CC991ADAC38100F04786 /* OAuthClient+Credentials.swift */; };
 		F500CC9E1ADADD3900F04786 /* DoorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F500CC9D1ADADD3900F04786 /* DoorRouter.swift */; };
 		F50BBB7E1AED3CC100A8150C /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50BBB7D1AED3CC100A8150C /* TimelineView.swift */; };
 		F50F8F361AD595B200E77DCB /* ColoredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F8F351AD595B200E77DCB /* ColoredButton.swift */; };
 		F50F8F381AD595C000E77DCB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F8F371AD595C000E77DCB /* LoginViewController.swift */; };
+		F546459A1D0D931A00DBD937 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54645991D0D931A00DBD937 /* CoreLocation.framework */; };
 		F563C1A61B25B16D0065401B /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F563C1A51B25B16D0065401B /* SwiftyJSON.swift */; };
 		F56D81FA1ADA9ADD00E9A301 /* OAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56D81F91ADA9ADD00E9A301 /* OAuthClient.swift */; };
 		F56D81FE1ADAA70C00E9A301 /* OAuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56D81FD1ADAA70C00E9A301 /* OAuthRouter.swift */; };
@@ -75,6 +75,7 @@
 		F50BBB7D1AED3CC100A8150C /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		F50F8F351AD595B200E77DCB /* ColoredButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColoredButton.swift; sourceTree = "<group>"; };
 		F50F8F371AD595C000E77DCB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F54645991D0D931A00DBD937 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F563C1A51B25B16D0065401B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		F56D81F91ADA9ADD00E9A301 /* OAuthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClient.swift; sourceTree = "<group>"; };
 		F56D81FD1ADAA70C00E9A301 /* OAuthRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthRouter.swift; sourceTree = "<group>"; };
@@ -111,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EB7B5AFC73B1E16B83E9ACB /* Pods.framework in Frameworks */,
+				F546459A1D0D931A00DBD937 /* CoreLocation.framework in Frameworks */,
 				294B493A4BB043030129D447 /* Pods_Dyr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +141,7 @@
 		ACF3287F3613639442F127E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F54645991D0D931A00DBD937 /* CoreLocation.framework */,
 				6EA2B2334A43F0BC8ED779D8 /* Pods.framework */,
 				102319FF9BDD597FCCDCFC69 /* Pods_Dyr.framework */,
 			);
@@ -421,7 +423,7 @@
 		F5B01DB11AA356A900EF2A2A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
