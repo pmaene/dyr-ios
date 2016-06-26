@@ -12,8 +12,8 @@ class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationBar.barStyle = UIBarStyle.Black
-        self.navigationBar.barTintColor = UIColor.baseColor()
-        self.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationBar.barStyle = UIBarStyle.black
+        self.navigationBar.barTintColor = UIColor.base()
+        self.navigationBar.tintColor = UIColor.white()
     }
 }

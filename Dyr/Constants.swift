@@ -10,9 +10,9 @@ import Foundation
 
 class Constants {    
     class func value(forKey key: String) -> String {
-        let constantsPath = NSBundle.mainBundle().pathForResource("Constants", ofType: "plist")!
+        let constantsPath = Bundle.main().pathForResource("Constants", ofType: "plist")!
         let constantsDictionary = NSDictionary(contentsOfFile: constantsPath)!
         
-        return constantsDictionary.objectForKey(key) as! String
+        return constantsDictionary.object(forKey: key) as! String
     }
 }

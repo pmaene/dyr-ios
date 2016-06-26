@@ -15,8 +15,8 @@ class Door: Accessory {
     @NSManaged var longitude: Double
     @NSManaged var maxDistance: Double
     
-    class func insert(json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Door {
-        let door = NSEntityDescription.insertNewObjectForEntityForName("Door", inManagedObjectContext: managedObjectContext) as! Door
+    class func insert(_ json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Door {
+        let door = NSEntityDescription.insertNewObject(forEntityName: "Door", into: managedObjectContext) as! Door
         
         door.identifier = json["id"].stringValue
         door.name = json["name"].stringValue

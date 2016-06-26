@@ -13,8 +13,8 @@ import SwiftyJSON
 import UIKit
 
 enum State {
-    case Open
-    case Closed
+    case open
+    case closed
 }
 
 class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDelegate {
@@ -23,14 +23,14 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     private var door: Door?
     private var dataRefreshing = false
     private var locationManager: CLLocationManager?
-    private var state = State.Closed
+    private var state = State.closed
     
     private func initDoor() {
-        let request = NSFetchRequest(entityName: "Door")
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Door")
         
         var results: [Door]
         do {
-            results = try managedObjectContext!.executeFetchRequest(request) as! [Door]
+            results = try managedObjectContext!.fetch(request) as! [Door]
         } catch let error as NSError? {
             fatalError("[\(String(self)), \(#function))] Error: \(error), \(error!.userInfo)")
         }
@@ -41,45 +41,50 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
         door = results.last
             
         if door == nil {
-            Alamofire.request(DoorRouter.Doors())
-                .responseSwiftyJSON({(_, _, json, error) in
-                    if error == nil {
-                        if json.count > 0 {
-                            // TODO: Figure out what to do when a user has multiple doors
-                            if json.count > 1 {}
-                            
-                            self.door = Door.insert(json[0], inManagedObjectContext: self.managedObjectContext!)
-                            
-                            try! self.managedObjectContext?.save()
-                            self.initFetchedResultsController()
+            Alamofire.request(DoorRouter.doors())
+                .responseJSON { response in
+                    switch response.result {
+                        case .success:
+                            if let jsonData = response.result.value {
+                                let json = JSON(jsonData)
+                                if json.count > 0 {
+                                    // TODO: Figure out what to do when a user has multiple doors
+                                    if json.count > 1 {}
                                     
-                            if self.door != nil {
-                                self.title = self.door!.descriptionString
-                                self.getLastEvents()
+                                    self.door = Door.insert(json[0], inManagedObjectContext: self.managedObjectContext!)
+                                    
+                                    try! self.managedObjectContext?.save()
+                                    self.initFetchedResultsController()
+                                    
+                                    if self.door != nil {
+                                        self.title = self.door!.descriptionString
+                                        self.getLastEvents()
+                                    }
+                                }
                             }
-                        }
-                    } else {
-                        NSLog("[\(String(self)), \(#function))] Error: \(error), \((error as? NSError)!.userInfo)")
+
+                        case .failure(let error):
+                            NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
                     }
-                })
+                }
         } else {
             title = door!.descriptionString
         }
     }
     
     private func initFetchedResultsController() {
-        let fetchRequest = NSFetchRequest(entityName: "Event")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         if door != nil {
-            fetchRequest.predicate = NSPredicate(format: "accessory == %@", door!)
+            fetchRequest.predicate = Predicate(format: "accessory == %@", door!)
         }
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationTime", ascending: false)]
+        fetchRequest.sortDescriptors = [SortDescriptor(key: "creationTime", ascending: false)]
 
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
     }
     
     private func initLocationManager() {
         let authorizationStatus = CLLocationManager.authorizationStatus()
-        if authorizationStatus == .Restricted || authorizationStatus == .Denied {
+        if authorizationStatus == .restricted || authorizationStatus == .denied {
             return
         }
 
@@ -87,7 +92,7 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         
-        if authorizationStatus == .NotDetermined {
+        if authorizationStatus == .notDetermined {
             locationManager?.requestWhenInUseAuthorization()
         }
         
@@ -101,52 +106,64 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
         
         dataRefreshing = true
         
-        Alamofire.request(EventRouter.Events(door: door!))
-            .responseSwiftyJSON({(_, _, json, error) in
-                if error == nil {
-                    for (_, event): (String, JSON) in json {
-                        let request = NSFetchRequest(entityName: "Event")
-                        request.predicate = NSPredicate(format: "identifier = %@", event["id"].stringValue)
-                        
-                        let results = try! self.managedObjectContext!.executeFetchRequest(request) as! [Event]
-                        if results.count == 0 {
-                            Event.insert(event, inManagedObjectContext: self.managedObjectContext!)
+        Alamofire.request(EventRouter.events(door: door!))
+            .responseJSON { response in
+                switch response.result {
+                    case .success:
+                        if let jsonData = response.result.value {
+                            let json = JSON(jsonData)
+                            for (_, event): (String, JSON) in json {
+                                let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
+                                request.predicate = Predicate(format: "identifier = %@", event["id"].stringValue)
+                
+                                let results = try! self.managedObjectContext!.fetch(request) as! [Event]
+                                if results.count == 0 {
+                                    _ = Event.insert(event, inManagedObjectContext: self.managedObjectContext!)
+                                }
+                            }
+                
+                            try! self.managedObjectContext?.save()
+                
+                            self.dataRefreshing = false
                         }
-                    }
                     
-                    try! self.managedObjectContext?.save()
-                    
-                    self.dataRefreshing = false
-                } else {
-                    NSLog("[\(String(self)), \(#function))] Error: \(error), \((error as? NSError)!.userInfo)")
+                    case .failure(let error):
+                        NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
                 }
-            })
+            }
     }
     
     private func enableToggleButton() {
-        navigationItem.rightBarButtonItem?.enabled = true
+        navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
     private func disableToggleButton() {
-        navigationItem.rightBarButtonItem?.enabled = false
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
-    @IBAction func toggle(sender: UIBarButtonItem) {
-        Alamofire.request(DoorRouter.Switch(door: door!))
-            .responseSwiftyJSON({(_, _, json, error) in
-                self.getLastEvents()
-                
-                if error != nil {
-                    NSLog("[\(String(self)), \(#function))] Error: \(error), \((error as? NSError)!.userInfo)")
+    @IBAction func toggle(_ sender: UIBarButtonItem) {
+        Alamofire.request(DoorRouter.switch(door: door!))
+            .responseJSON { response in
+                switch response.result {
+                    case .success:
+                        if let jsonData = response.result.value {
+                            let json = JSON(jsonData)
+                            if json["error"].string == nil {
+                                self.getLastEvents()
+                            }
+                        }
+                    
+                    case .failure(let error):
+                        NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
                 }
-            })
+            }
         
-        if state == State.Closed {
+        if state == State.closed {
             sender.image = UIImage(named: "Close")
-            state = State.Open
+            state = State.open
         } else {
             sender.image = UIImage(named: "Open")
-            state = State.Closed
+            state = State.closed
         }
     }
     
@@ -155,14 +172,14 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DoorViewController.OAuthClientDidRefreshAccessToken(_:)), name: OAuthClientRefreshedAccessTokenNotification, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(DoorViewController.OAuthClientDidRefreshAccessToken(_:)), name: OAuthClientRefreshedAccessTokenNotification, object: nil)
         
         initDoor()
         initFetchedResultsController()
         initLocationManager()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if door != nil {
@@ -172,9 +189,9 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     
     // MARK: - UITableViewDataSource
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Event
-        let cell = tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let event = fetchedResultsController.object(at: indexPath) as! Event
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
         cell.updateOutlets(event)
         
         return cell
@@ -182,26 +199,25 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     
     // MARK: - OAuthClient
     
-    func OAuthClientDidRefreshAccessToken(notification: NSNotification) {
+    func OAuthClientDidRefreshAccessToken(_ notification: Notification) {
         initDoor()
         initFetchedResultsController()
     }
     
     // MARK: - CLLocationManagerDelegate
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedWhenInUse {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
             manager.startUpdatingLocation()
         }
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if door != nil {
             let currentLocation = locations.last
             let doorLocation = CLLocation.init(latitude: door!.latitude, longitude: door!.longitude)
             
-            print(currentLocation?.distanceFromLocation(doorLocation))
-            if currentLocation?.distanceFromLocation(doorLocation) < door!.maxDistance {
+            if currentLocation?.distance(from: doorLocation) < door!.maxDistance {
                 enableToggleButton()
             } else {
                 disableToggleButton()

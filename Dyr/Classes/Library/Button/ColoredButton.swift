@@ -12,6 +12,6 @@ class ColoredButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setTitleColor(UIColor.baseColor(), forState: UIControlState.Normal)
+        setTitleColor(UIColor.base(), for: UIControlState())
     }
 }

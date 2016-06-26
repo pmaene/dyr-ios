@@ -10,11 +10,11 @@ import UIKit
 
 extension UIColor {
     convenience init(hex: String) {
-        let scanner = NSScanner(string: hex)
+        let scanner = Scanner(string: hex)
         scanner.scanLocation = 1
         
         var intValue: CUnsignedInt = 0x0
-        scanner.scanHexInt(&intValue)
+        scanner.scanHexInt32(&intValue)
         
         self.init(red: CGFloat((intValue & 0xFF0000) >> 16)/255.0, green: CGFloat((intValue & 0xFF00) >> 8)/255.0, blue: CGFloat((intValue & 0xFF))/255.0, alpha: 1.0)
     }

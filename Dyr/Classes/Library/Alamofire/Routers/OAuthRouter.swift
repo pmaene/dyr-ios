@@ -16,45 +16,45 @@ enum OAuthRouter: URLRequestConvertible {
         "client_secret": Constants.value(forKey: "APIClientSecret")
     ]
     
-    case AccessTokenFromCredentials(username: String, password: String)
-    case AccessTokenFromRefreshToken(refreshToken: String)
+    case accessTokenFromCredentials(username: String, password: String)
+    case accessTokenFromRefreshToken(refreshToken: String)
     
     var method: Alamofire.Method {
         switch self {
-            case .AccessTokenFromCredentials:
+            case .accessTokenFromCredentials:
                 return .POST
-            case .AccessTokenFromRefreshToken:
+            case .accessTokenFromRefreshToken:
                 return .POST
         }
     }
     
     var path: String {
         switch self {
-            case .AccessTokenFromCredentials:
+            case .accessTokenFromCredentials:
                 return "/token"
-            case .AccessTokenFromRefreshToken:
+            case .accessTokenFromRefreshToken:
                 return "/token"
         }
     }
     
     // MARK: - URLRequestConvertible
     
-    var URLRequest: NSMutableURLRequest {
-        let encoding = Alamofire.ParameterEncoding.URL
+    var urlRequest: URLRequest {
+        let encoding = Alamofire.ParameterEncoding.url
         
         let (path, parameters): (String, [String: AnyObject]?) = {
             switch self {
-                case .AccessTokenFromCredentials(let username, let password):
+                case .accessTokenFromCredentials(let username, let password):
                     return ("/token", ["username": username, "password": password, "grant_type": "password"])
-                case .AccessTokenFromRefreshToken(let refreshToken):
+                case .accessTokenFromRefreshToken(let refreshToken):
                     return ("/token", ["refresh_token": refreshToken, "grant_type": "refresh_token"])
             }
         }()
         
-        let URL = NSURL(string: OAuthRouter.baseURL)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = Alamofire.Method.POST.rawValue
+        let url = Foundation.URL(string: OAuthRouter.baseURL)!
+        var urlRequest = URLRequest(url: try! url.appendingPathComponent(path))
+        urlRequest.httpMethod = Alamofire.Method.POST.rawValue
         
-        return encoding.encode(mutableURLRequest, parameters: OAuthRouter.clientParameters + parameters!).0
+        return encoding.encode(urlRequest, parameters: OAuthRouter.clientParameters + parameters!).0
     }
 }

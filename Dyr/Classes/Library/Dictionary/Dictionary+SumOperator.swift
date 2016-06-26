@@ -17,7 +17,7 @@ func +<K, V>(left: [K: V], right: [K: V]) -> [K: V] {
     return result
 }
 
-func +=<K, V> (inout left: [K: V], right: [K: V]) {
+func +=<K, V> (left: inout [K: V], right: [K: V]) {
     for (k, v) in right {
         left[k] = v
     }

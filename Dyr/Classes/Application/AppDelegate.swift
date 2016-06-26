@@ -16,22 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func presentLoginViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+        let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         
         window?.rootViewController = loginViewController
     }
     
-    func OAuthClientFailed(notification: NSNotification) {
+    func OAuthClientFailed(_ notification: Notification) {
         presentLoginViewController()
     }
     
     // MARK: - UIApplicationDelegate
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        if OAuthClient.sharedClient.accessToken == nil {
-            presentLoginViewController()
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.OAuthClientFailed(_:)), name: OAuthClientFailedNotification, object: nil)
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        NotificationCenter.default().addObserver(self, selector: #selector(AppDelegate.OAuthClientFailed(_:)), name: OAuthClientFailedNotification, object: nil)
         
         return true
     }
@@ -39,17 +35,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data Stack
     
     lazy var managedObjectContext: NSManagedObjectContext? = {
-        let managedObjectModel = NSManagedObjectModel(contentsOfURL: NSBundle.mainBundle().URLForResource("Dyr", withExtension: "momd")!)
+        let managedObjectModel = NSManagedObjectModel(contentsOf: Bundle.main().urlForResource("Dyr", withExtension: "momd")!)
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!)
         
-        let applicationDocumentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last! as NSURL
-        let storeURL = applicationDocumentsDirectory.URLByAppendingPathComponent("Dyr.sqlite")
+        let applicationDocumentsDirectory = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask).last! as URL
+        let storeURL = try! applicationDocumentsDirectory.appendingPathComponent("Dyr.sqlite")
         
         var error: NSError? = nil
         
         var store: NSPersistentStore?
         do {
-            store = try persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+            store = try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
         } catch var error as NSError {
             store = nil
             

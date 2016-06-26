@@ -12,15 +12,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
-    @IBAction func login(sender: AnyObject) {
+    @IBAction func login(_ sender: AnyObject) {
         OAuthClient.sharedClient.accessTokenWithCredentials(username: username.text!, password: password.text!)
     }
     
-    func presentNavigationController(notification: NSNotification) {
+    func presentNavigationController(_ notification: Notification) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let navigationController = storyboard.instantiateViewControllerWithIdentifier("NavigationController") as! NavigationController
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! NavigationController
 
-        self.presentViewController(navigationController, animated: true, completion: nil)
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     // MARK: - UIViewController
@@ -28,6 +28,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.presentNavigationController(_:)), name: OAuthClientReceivedAccessTokenNotification, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(LoginViewController.presentNavigationController(_:)), name: OAuthClientReceivedAccessTokenNotification, object: nil)
     }
 }

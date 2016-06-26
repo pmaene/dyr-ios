@@ -16,30 +16,30 @@ enum EventRouter: URLRequestConvertible {
         "client_secret": Constants.value(forKey: "APIClientSecret")
     ]
     
-    case Events(door: Door)
+    case events(door: Door)
     
     var method: Alamofire.Method {
         switch self {
-            case .Events:
+            case .events:
                 return .GET
         }
     }
     
     var path: String {
         switch self {
-            case .Events:
+            case .events:
                 return "/"
         }
     }
     
     // MARK: - URLRequestConvertible
     
-    var URLRequest: NSMutableURLRequest {
-        let encoding = Alamofire.ParameterEncoding.URL
+    var urlRequest: URLRequest {
+        let encoding = Alamofire.ParameterEncoding.url
         
-        let URL = NSURL(string: EventRouter.baseURL)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
+        let url = Foundation.URL(string: EventRouter.baseURL)!
+        var urlRequest = URLRequest(url: try! url.appendingPathComponent(path))
+        urlRequest.httpMethod = method.rawValue
         
         var OAuthParameters = Dictionary<String, AnyObject>()
         if let accessToken = OAuthClient.sharedClient.accessToken {
@@ -48,11 +48,11 @@ enum EventRouter: URLRequestConvertible {
         
         let parameters: [String: AnyObject]? = {
             switch self {
-                case .Events(let door):
+                case .events(let door):
                     return ["door": door.identifier]
             }
         }()
         
-        return encoding.encode(mutableURLRequest, parameters: EventRouter.clientParameters + OAuthParameters + parameters!).0
+        return encoding.encode(urlRequest, parameters: EventRouter.clientParameters + OAuthParameters + parameters!).0
     }
 }

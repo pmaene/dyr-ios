@@ -16,8 +16,8 @@ class User: NSManagedObject {
     
     @NSManaged var events: NSSet
     
-    class func insert(json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> User {
-        let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: managedObjectContext) as! User
+    class func insert(_ json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> User {
+        let user = NSEntityDescription.insertNewObject(forEntityName: "User", into: managedObjectContext) as! User
         
         user.identifier = json["id"].stringValue
         user.name = json["name"].stringValue

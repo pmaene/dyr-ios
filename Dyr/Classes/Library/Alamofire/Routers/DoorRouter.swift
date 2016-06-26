@@ -16,54 +16,56 @@ enum DoorRouter: URLRequestConvertible {
         "client_secret": Constants.value(forKey: "APIClientSecret")
     ]
     
-    case Doors()
-    case Switch(door: Door)
+    case doors()
+    case `switch`(door: Door)
     
     var method: Alamofire.Method {
         switch self {
-            case .Doors:
+            case .doors:
                 return .GET
-            case .Switch:
+            case .switch:
                 return .POST
         }
     }
     
     var path: String {
         switch self {
-            case .Doors:
+            case .doors:
                 return "/"
-            case .Switch:
+            case .switch:
                 return "/switch"
         }
     }
     
     // MARK: - URLRequestConvertible
     
-    var URLRequest: NSMutableURLRequest {
-        let encoding = Alamofire.ParameterEncoding.URL
+    var urlRequest: URLRequest {
+        get {
+            let encoding = Alamofire.ParameterEncoding.url
         
-        let URL = NSURL(string: DoorRouter.baseURL)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
+            let url = Foundation.URL(string: DoorRouter.baseURL)!
+            var urlRequest = URLRequest(url: try! url.appendingPathComponent(path))
+            urlRequest.httpMethod = method.rawValue
         
-        var OAuthParameters = Dictionary<String, AnyObject>()
-        if let accessToken = OAuthClient.sharedClient.accessToken {
-            OAuthParameters = ["access_token": accessToken.accessToken]
-        }
-        
-        let parameters: [String: AnyObject]? = {
-            switch self {
-                case .Switch(let door):
-                    return ["id": door.identifier]
-                default:
-                    return nil
+            var OAuthParameters = Dictionary<String, AnyObject>()
+            if let accessToken = OAuthClient.sharedClient.accessToken {
+                OAuthParameters = ["access_token": accessToken.accessToken]
             }
-        }()
         
-        if parameters == nil {
-            return encoding.encode(mutableURLRequest, parameters: DoorRouter.clientParameters + OAuthParameters).0
-        } else {
-            return encoding.encode(mutableURLRequest, parameters: DoorRouter.clientParameters + OAuthParameters + parameters!).0
+            let parameters: [String: AnyObject]? = {
+                switch self {
+                    case .switch(let door):
+                        return ["id": door.identifier]
+                    default:
+                        return nil
+                }
+            }()
+        
+            if parameters == nil {
+                return encoding.encode(urlRequest, parameters: DoorRouter.clientParameters + OAuthParameters).0
+            } else {
+                return encoding.encode(urlRequest, parameters: DoorRouter.clientParameters + OAuthParameters + parameters!).0
+            }
         }
     }
 }

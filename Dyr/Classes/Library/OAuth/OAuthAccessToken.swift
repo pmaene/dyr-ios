@@ -18,7 +18,7 @@ let OAuthKeychainKey: String = "OAuthAccessToken"
 
 class OAuthAccessToken: CustomStringConvertible {
     var accessToken: String
-    var expiresAt: NSDate?
+    var expiresAt: Date?
     var tokenType: TokenType?
     var refreshToken: String
     
@@ -27,9 +27,9 @@ class OAuthAccessToken: CustomStringConvertible {
     }
     
     init?() {
-        if let data = Lockbox.unarchiveObjectForKey(OAuthKeychainKey) as? [String: AnyObject] {
+        if let data = Lockbox.unarchiveObject(forKey: OAuthKeychainKey) as? [String: AnyObject] {
             accessToken = data["accessToken"] as! String
-            expiresAt = data["expiresAt"] as? NSDate
+            expiresAt = data["expiresAt"] as? Date
             tokenType = TokenType(rawValue: data["tokenType"] as! String)
             refreshToken = data["refreshToken"] as! String
         } else {
@@ -40,7 +40,7 @@ class OAuthAccessToken: CustomStringConvertible {
     init?(json: JSON) {
         if json != nil {
             accessToken = json["access_token"].stringValue
-            expiresAt = NSDate(timeIntervalSinceNow: json["expires_in"].rawValue as! NSTimeInterval)
+            expiresAt = NSDate(timeIntervalSinceNow: json["expires_in"].rawValue as! TimeInterval) as Date
             tokenType = TokenType(rawValue: json["token_type"].stringValue)!
             refreshToken = json["refresh_token"].stringValue
         } else {
@@ -49,7 +49,7 @@ class OAuthAccessToken: CustomStringConvertible {
     }
 
     func hasExpired() -> Bool {
-        return expiresAt!.compare(NSDate()) == NSComparisonResult.OrderedAscending;
+        return expiresAt!.compare(Date()) == ComparisonResult.orderedAscending;
     }
     
     // MARK: - Keychain
