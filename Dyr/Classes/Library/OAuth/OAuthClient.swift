@@ -19,19 +19,21 @@ class OAuthClient {
     var accessToken: OAuthAccessToken? {
         get {
             if let accessToken = OAuthAccessToken() {
-                if !accessToken.hasExpired() {
-                    return accessToken
+                if accessToken.hasExpired() {
+                    refreshAccessToken(accessToken)
+                    return nil
                 }
+                
+                return accessToken
+            } else {
+                NotificationCenter.default().post(name: NSNotification.Name(rawValue: OAuthClientFailedNotification), object: nil)
+                return nil
             }
-            
-            NotificationCenter.default().post(name: NSNotification.Name(rawValue: OAuthClientFailedNotification), object: nil)
-            
-            return nil
         }
     }
     
-    func refreshAccessToken() {
-        Alamofire.request(OAuthRouter.accessTokenFromRefreshToken(refreshToken: self.accessToken!.refreshToken))
+    func refreshAccessToken(_ accessToken: OAuthAccessToken) {
+        Alamofire.request(OAuthRouter.accessTokenFromRefreshToken(refreshToken: accessToken.refreshToken))
             .responseJSON { response in
                 switch response.result {
                     case .success:

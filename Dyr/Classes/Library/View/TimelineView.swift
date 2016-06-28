@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class TimelineView: UIView {
     lazy var lineView: UIView = {

@@ -18,7 +18,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         
-        window?.rootViewController = loginViewController
+        if !(self.window?.rootViewController is LoginViewController) {
+            if let window = self.window {
+                UIView.transition(
+                    with: window,
+                    duration: 0.5,
+                    options: .transitionFlipFromLeft,
+                    animations: {
+                        window.rootViewController = loginViewController
+                    },
+                    completion: { (finished: Bool) -> () in }
+                )
+            }
+        }
     }
     
     func OAuthClientFailed(_ notification: Notification) {
