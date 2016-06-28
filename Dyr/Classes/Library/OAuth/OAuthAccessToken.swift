@@ -22,6 +22,8 @@ class OAuthAccessToken: CustomStringConvertible {
     var tokenType: TokenType?
     var refreshToken: String
     
+    var refreshing: Bool = false
+    
     var description: String {
         return "<OAuthAccessToken accessToken:\(accessToken) expiresAt:\(expiresAt) tokenType:\(tokenType?.rawValue) refreshToken:\(refreshToken)>"
     }

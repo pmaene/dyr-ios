@@ -18,14 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         
-        if !(self.window?.rootViewController is LoginViewController) {
-            if let window = self.window {
+        if !(window?.rootViewController is LoginViewController) {
+            if let unwrappedWindow = window {
                 UIView.transition(
-                    with: window,
+                    with: unwrappedWindow,
                     duration: 0.5,
                     options: .transitionFlipFromLeft,
                     animations: {
-                        window.rootViewController = loginViewController
+                        unwrappedWindow.rootViewController = loginViewController
                     },
                     completion: { (finished: Bool) -> () in }
                 )

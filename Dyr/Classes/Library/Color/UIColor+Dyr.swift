@@ -25,6 +25,10 @@ extension UIColor {
         return UIColor.black()
     }
     
+    class func error() -> UIColor {
+        return UIColor(hex: "#F44336")
+    }
+    
     class func secondaryText() -> UIColor {
         return UIColor(hex: "#727272")
     }
