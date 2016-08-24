@@ -8,7 +8,6 @@
 
 import CoreData
 import Foundation
-import SwiftyJSON
 
 class User: NSManagedObject {
     @NSManaged var identifier: String
@@ -16,11 +15,15 @@ class User: NSManagedObject {
     
     @NSManaged var events: NSSet
     
-    class func insert(_ json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> User {
+    class func insert(_ json: [String: String], inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> User? {
         let user = NSEntityDescription.insertNewObject(forEntityName: "User", into: managedObjectContext) as! User
         
-        user.identifier = json["id"].stringValue
-        user.name = json["name"].stringValue
+        guard let id = json["id"], let name = json["name"] else {
+            return nil
+        }
+        
+        user.identifier = id
+        user.name = name
         
         return user
     }

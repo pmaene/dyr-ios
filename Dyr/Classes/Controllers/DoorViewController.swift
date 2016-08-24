@@ -9,7 +9,6 @@
 import Alamofire
 import CoreData
 import CoreLocation
-import SwiftyJSON
 import UIKit
 
 enum State {
@@ -28,58 +27,59 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     private func initDoor() {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Door")
         
-        var results: [Door]
         do {
-            results = try managedObjectContext!.fetch(request) as! [Door]
-        } catch let error as NSError? {
-            fatalError("[\(String(self)), \(#function))] Error: \(error), \(error!.userInfo)")
-        }
+            let results = try managedObjectContext!.fetch(request) as! [Door]
             
-        // TODO: Allow the user to select the correct door...
-        if results.count > 1 {}
+            // TODO: Allow the user to select the correct door...
+            if results.count > 1 {}
             
-        door = results.last
+            door = results.last
             
-        if door == nil {
-            Alamofire.request(DoorRouter.doors())
-                .responseJSON { response in
-                    switch response.result {
+            if door == nil {
+                Alamofire.request(DoorRouter.doors())
+                    .responseJSON { response in
+                        switch response.result {
                         case .success:
-                            if let jsonData = response.result.value {
-                                let json = JSON(jsonData)
-                                if json.count > 0 {
-                                    // TODO: Figure out what to do when a user has multiple doors
-                                    if json.count > 1 {}
-                                    
-                                    self.door = Door.insert(json[0], inManagedObjectContext: self.managedObjectContext!)
-                                    
-                                    try! self.managedObjectContext?.save()
+                            if let json = response.result.value as? [[String: Any]] {
+                                // TODO: Figure out what to do when a user has multiple doors
+                                if json.count > 1 {}
+                                
+                                self.door = Door.insert(json[0], inManagedObjectContext: self.managedObjectContext!)
+                                
+                                do {
+                                    try self.managedObjectContext?.save()
                                     self.initFetchedResultsController()
                                     
                                     if self.door != nil {
                                         self.title = self.door!.descriptionString
                                         self.getLastEvents()
                                     }
+                                } catch {
+                                    fatalError()
                                 }
                             }
-
-                        case .failure(let error):
-                            NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
+                            
+                        case .failure:
+                            // TODO: Post notification and show banner
+                            fatalError()
+                        }
                     }
-                }
-        } else {
-            title = door!.descriptionString
+            } else {
+                title = door!.descriptionString
+            }
+        } catch {
+            fatalError()
         }
     }
     
     private func initFetchedResultsController() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
-        if door != nil {
-            fetchRequest.predicate = Predicate(format: "accessory == %@", door!)
+        if let door = door {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
+            fetchRequest.predicate = NSPredicate(format: "accessory == %@", door)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationTime", ascending: false)]
+            
+            self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         }
-        fetchRequest.sortDescriptors = [SortDescriptor(key: "creationTime", ascending: false)]
-
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
     }
     
     private func initLocationManager() {
@@ -109,32 +109,39 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
         Alamofire.request(EventRouter.events(door: door!))
             .responseJSON { response in
                 switch response.result {
-                    case .success:
-                        if let jsonData = response.result.value {
-                            let json = JSON(jsonData)
-                            for (_, event): (String, JSON) in json {
+                case .success:
+                    if let json = response.result.value as? [[String: Any]] {
+                        for event in json {
+                            if let id = event["id"] as? String {
                                 let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
-                                request.predicate = Predicate(format: "identifier = %@", event["id"].stringValue)
+                                request.predicate = NSPredicate(format: "identifier = %@", id)
                 
-                                let results = try! self.managedObjectContext!.fetch(request) as! [Event]
-                                if results.count == 0 {
+                                if let results = try! self.managedObjectContext!.fetch(request) as? [Event], results.count == 0 {
+                                    // TODO: Verify whether insert returned nil
                                     _ = Event.insert(event, inManagedObjectContext: self.managedObjectContext!)
                                 }
                             }
-                
-                            try! self.managedObjectContext?.save()
-                
-                            self.dataRefreshing = false
                         }
+                
+                        do {
+                            try self.managedObjectContext?.save()
+                            self.dataRefreshing = false
+                        } catch {
+                            fatalError()
+                        }
+                    }
                     
-                    case .failure(let error):
-                        NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
+                case .failure:
+                    // TODO: Post notification and show banner
+                    fatalError()
                 }
             }
     }
     
     private func enableToggleButton() {
-        navigationItem.rightBarButtonItem?.isEnabled = true
+        if OAuthClient.sharedClient.accessToken != nil {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
     }
     
     private func disableToggleButton() {
@@ -145,16 +152,16 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
         Alamofire.request(DoorRouter.switch(door: door!))
             .responseJSON { response in
                 switch response.result {
-                    case .success:
-                        if let jsonData = response.result.value {
-                            let json = JSON(jsonData)
-                            if json["error"].string == nil {
-                                self.getLastEvents()
-                            }
+                case .success:
+                    if let json = response.result.value as? [String: Any] {
+                        if let error = json["error"] as? String, error.isEmpty {
+                            self.getLastEvents()
                         }
+                    }
                     
-                    case .failure(let error):
-                        NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
+                case .failure:
+                    // TODO: Post notification and show banner
+                    fatalError()
                 }
             }
         
@@ -172,7 +179,7 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default().addObserver(self, selector: #selector(DoorViewController.OAuthClientDidRefreshAccessToken(_:)), name: OAuthClientRefreshedAccessTokenNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DoorViewController.OAuthClientDidRefreshAccessToken(_:)), name: OAuthClientRefreshedAccessTokenNotification, object: nil)
         
         initDoor()
         initFetchedResultsController()
@@ -182,6 +189,7 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        disableToggleButton()
         if door != nil {
             getLastEvents()
         }
@@ -214,13 +222,14 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if door != nil {
-            let currentLocation = locations.last
-            let doorLocation = CLLocation.init(latitude: door!.latitude, longitude: door!.longitude)
+            if let currentLocation = locations.last {
+                let doorLocation = CLLocation.init(latitude: door!.latitude, longitude: door!.longitude)
             
-            if currentLocation?.distance(from: doorLocation) < door!.maxDistance {
-                enableToggleButton()
-            } else {
-                disableToggleButton()
+                if currentLocation.distance(from: doorLocation) < door!.maxDistance {
+                    enableToggleButton()
+                } else {
+                    disableToggleButton()
+                }
             }
         }
     }

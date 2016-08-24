@@ -19,13 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         
         if !(window?.rootViewController is LoginViewController) {
-            if let unwrappedWindow = window {
+            if let window = window {
                 UIView.transition(
-                    with: unwrappedWindow,
+                    with: window,
                     duration: 0.5,
                     options: .transitionFlipFromLeft,
                     animations: {
-                        unwrappedWindow.rootViewController = loginViewController
+                        window.rootViewController = loginViewController
                     },
                     completion: { (finished: Bool) -> () in }
                 )
@@ -38,8 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - UIApplicationDelegate
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        NotificationCenter.default().addObserver(self, selector: #selector(AppDelegate.OAuthClientFailed(_:)), name: OAuthClientFailedNotification, object: nil)
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.OAuthClientFailed(_:)), name: OAuthClientFailedNotification, object: nil)
         
         return true
     }
@@ -47,30 +48,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data Stack
     
     lazy var managedObjectContext: NSManagedObjectContext? = {
-        let managedObjectModel = NSManagedObjectModel(contentsOf: Bundle.main().urlForResource("Dyr", withExtension: "momd")!)
+        let managedObjectModel = NSManagedObjectModel(contentsOf: Bundle.main.url(forResource: "Dyr", withExtension: "momd")!)
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!)
         
-        let applicationDocumentsDirectory = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask).last! as URL
-        let storeURL = try! applicationDocumentsDirectory.appendingPathComponent("Dyr.sqlite")
+        let applicationDocumentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last! as URL
+        let store = applicationDocumentsDirectory.appendingPathComponent("Dyr.sqlite")
         
-        var error: NSError? = nil
-        
-        var store: NSPersistentStore?
         do {
-            store = try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
-        } catch var error as NSError {
-            store = nil
+            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: store, options: nil)
             
-            NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
-            abort()
+            // TODO: Check out contextQueueConcurrencyType
+            var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+            managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
+            
+            return managedObjectContext
         } catch {
             fatalError()
         }
-        
-        var managedObjectContext = NSManagedObjectContext()
-        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
-        
-        return managedObjectContext
     }()
     
     func saveContext () {

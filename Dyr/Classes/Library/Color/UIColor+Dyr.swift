@@ -9,27 +9,39 @@
 import UIKit
 
 extension UIColor {
-    class func base() -> UIColor {
-        return UIColor(hex: "#607D8B")
+    class var base: UIColor {
+        get {
+            return UIColor(hex: "#607D8B")
+        }
+    }
+
+    class var lightBase: UIColor {
+        get {
+            return UIColor(hex: "#CFD8DC")
+        }
     }
     
-    class func lightBase() -> UIColor {
-        return UIColor(hex: "#CFD8DC")
+    class var accent: UIColor {
+        get {
+            return UIColor(hex: "#FF5722")
+        }
     }
     
-    class func accent() -> UIColor {
-        return UIColor(hex: "#FF5722")
+    class var primaryText: UIColor {
+        get {
+            return UIColor.black
+        }
     }
     
-    class func primaryText() -> UIColor {
-        return UIColor.black()
+    class var error: UIColor {
+        get {
+            return UIColor(hex: "#F44336")
+        }
     }
     
-    class func error() -> UIColor {
-        return UIColor(hex: "#F44336")
-    }
-    
-    class func secondaryText() -> UIColor {
-        return UIColor(hex: "#727272")
+    class var secondaryText: UIColor {
+        get {
+            return UIColor(hex: "#727272")
+        }
     }
 }

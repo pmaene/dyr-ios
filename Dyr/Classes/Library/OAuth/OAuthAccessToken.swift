@@ -8,7 +8,6 @@
 
 import Foundation
 import Lockbox
-import SwiftyJSON
 
 enum TokenType: String {
     case Bearer = "bearer"
@@ -16,57 +15,85 @@ enum TokenType: String {
 
 let OAuthKeychainKey: String = "OAuthAccessToken"
 
-class OAuthAccessToken: CustomStringConvertible {
+class OAuthAccessToken: NSObject, NSSecureCoding {
     var accessToken: String
-    var expiresAt: Date?
-    var tokenType: TokenType?
+    var expiresAt: NSDate
+    var tokenType: TokenType
     var refreshToken: String
     
     var refreshing: Bool = false
     
-    var description: String {
-        return "<OAuthAccessToken accessToken:\(accessToken) expiresAt:\(expiresAt) tokenType:\(tokenType?.rawValue) refreshToken:\(refreshToken)>"
+    override var description: String {
+        return "<OAuthAccessToken accessToken:\(accessToken) expiresAt:\(expiresAt) tokenType:\(tokenType.rawValue) refreshToken:\(refreshToken)>"
     }
     
-    init?() {
-        if let data = Lockbox.unarchiveObject(forKey: OAuthKeychainKey) as? [String: AnyObject] {
-            accessToken = data["accessToken"] as! String
-            expiresAt = data["expiresAt"] as? Date
-            tokenType = TokenType(rawValue: data["tokenType"] as! String)
-            refreshToken = data["refreshToken"] as! String
-        } else {
-            return nil
-        }
+    init(accessToken: String, expiresAt: NSDate, tokenType: TokenType, refreshToken: String) {
+        self.accessToken = accessToken
+        self.expiresAt = expiresAt
+        self.tokenType = tokenType
+        self.refreshToken = refreshToken
     }
     
-    init?(json: JSON) {
-        if json != nil {
-            accessToken = json["access_token"].stringValue
-            expiresAt = NSDate(timeIntervalSinceNow: json["expires_in"].rawValue as! TimeInterval) as Date
-            tokenType = TokenType(rawValue: json["token_type"].stringValue)!
-            refreshToken = json["refresh_token"].stringValue
-        } else {
+    // TOOD: Use createdAt to calculate expiresAt
+    convenience init?(json: [String: Any]) {
+        guard let accessToken = json["access_token"] as? String,
+            let expiresIn = json["expires_in"] as? TimeInterval,
+            let rawTokenType = json["token_type"] as? String,
+            let tokenType = TokenType(rawValue: rawTokenType),
+            let refreshToken = json["refresh_token"] as? String
+        else {
             return nil
         }
+        
+        self.init(
+            accessToken: accessToken,
+            expiresAt: NSDate(timeIntervalSinceNow: expiresIn),
+            tokenType: tokenType,
+            refreshToken: refreshToken
+        )
     }
 
     func hasExpired() -> Bool {
-        return expiresAt!.compare(Date()) == ComparisonResult.orderedAscending;
+        return expiresAt.compare(Date()) == ComparisonResult.orderedAscending;
+    }
+    
+    // MARK: - NSSecureCoding
+    
+    static var supportsSecureCoding = true
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let accessToken = aDecoder.decodeObject(of: NSString.self, forKey: "accessToken") as String?,
+            let expiresAt = aDecoder.decodeObject(of: NSDate.self, forKey: "expiresAt") as NSDate?,
+            let rawTokenType = aDecoder.decodeObject(of: NSString.self, forKey: "tokenType") as String?,
+            let tokenType = TokenType(rawValue: rawTokenType),
+            let refreshToken = aDecoder.decodeObject(of: NSString.self, forKey: "refreshToken") as? String
+        else {
+            return nil
+        }
+        
+        self.init(
+            accessToken: accessToken,
+            expiresAt: expiresAt,
+            tokenType: tokenType,
+            refreshToken: refreshToken
+        )
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(accessToken, forKey: "accessToken")
+        aCoder.encode(expiresAt, forKey: "expiresAt")
+        aCoder.encode(tokenType.rawValue, forKey: "tokenType")
+        aCoder.encode(refreshToken, forKey: "refreshToken")
     }
     
     // MARK: - Keychain
     
-    func save() {
-        let data: [String: AnyObject] = [
-            "accessToken": accessToken,
-            "expiresAt": expiresAt!,
-            "tokenType": tokenType!.rawValue,
-            "refreshToken": refreshToken
-        ]
-        
-        Lockbox.archiveObject(data, forKey: OAuthKeychainKey)
-        
-        NSLog("[\(String(self)), \(#function))] Saved to Keychain")
+    func archive() {
+        Lockbox.archiveObject(self, forKey: OAuthKeychainKey)
+    }
+    
+    class func unarchive() -> OAuthAccessToken? {
+        return Lockbox.unarchiveObject(forKey: OAuthKeychainKey) as? OAuthAccessToken
     }
     
     func remove() {

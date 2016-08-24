@@ -11,7 +11,7 @@ import Foundation
 
 enum DoorRouter: URLRequestConvertible {
     static let baseURL = Constants.value(forKey: "APIBaseURL") + "/api/v1/accessories/doors"
-    static let clientParameters: [String: AnyObject] = [
+    static let clientParameters: [String: Any] = [
         "client_id": Constants.value(forKey: "APIClientID"),
         "client_secret": Constants.value(forKey: "APIClientSecret")
     ]
@@ -19,21 +19,21 @@ enum DoorRouter: URLRequestConvertible {
     case doors()
     case `switch`(door: Door)
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-            case .doors:
-                return .GET
-            case .switch:
-                return .POST
+        case .doors:
+            return .get
+        case .switch:
+            return .post
         }
     }
     
     var path: String {
         switch self {
-            case .doors:
-                return "/"
-            case .switch:
-                return "/switch"
+        case .doors:
+            return "/"
+        case .switch:
+            return "/switch"
         }
     }
     
@@ -44,20 +44,20 @@ enum DoorRouter: URLRequestConvertible {
             let encoding = Alamofire.ParameterEncoding.url
         
             let url = Foundation.URL(string: DoorRouter.baseURL)!
-            var urlRequest = URLRequest(url: try! url.appendingPathComponent(path))
+            var urlRequest = URLRequest(url: url.appendingPathComponent(path))
             urlRequest.httpMethod = method.rawValue
         
-            var OAuthParameters = Dictionary<String, AnyObject>()
+            var OAuthParameters = Dictionary<String, Any>()
             if let accessToken = OAuthClient.sharedClient.accessToken {
                 OAuthParameters = ["access_token": accessToken.accessToken]
             }
         
-            let parameters: [String: AnyObject]? = {
+            let parameters: [String: Any]? = {
                 switch self {
-                    case .switch(let door):
-                        return ["id": door.identifier]
-                    default:
-                        return nil
+                case .switch(let door):
+                    return ["id": door.identifier]
+                default:
+                    return nil
                 }
             }()
         

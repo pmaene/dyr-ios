@@ -8,23 +8,31 @@
 
 import CoreData
 import Foundation
-import SwiftyJSON
 
 class Door: Accessory {
     @NSManaged var latitude: Double
     @NSManaged var longitude: Double
     @NSManaged var maxDistance: Double
     
-    class func insert(_ json: JSON, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Door {
+    class func insert(_ json: [String: Any], inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> Door? {
         let door = NSEntityDescription.insertNewObject(forEntityName: "Door", into: managedObjectContext) as! Door
         
-        door.identifier = json["id"].stringValue
-        door.name = json["name"].stringValue
-        door.descriptionString = json["description"].stringValue
+        guard let id = json["id"] as? String,
+            let name = json["name"] as? String,
+            let description = json["description"] as? String,
+            let latitude = json["latitude"] as? Double,
+            let longitude = json["longitude"] as? Double,
+            let maxDistance = json["maxDistance"] as? Double
+        else {
+            return nil
+        }
         
-        door.latitude = json["latitude"].doubleValue
-        door.longitude = json["longitude"].doubleValue
-        door.maxDistance = json["maxDistance"].doubleValue
+        door.identifier = id
+        door.name = name
+        door.descriptionString = description
+        door.latitude = latitude
+        door.longitude = longitude
+        door.maxDistance = maxDistance
         
         return door
     }

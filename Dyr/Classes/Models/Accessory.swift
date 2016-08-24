@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import SwiftyJSON
 
 class Accessory: NSManagedObject {
     @NSManaged var descriptionString: String

@@ -8,17 +8,16 @@
 
 import Alamofire
 import Foundation
-import SwiftyJSON
 
-let OAuthClientReceivedAccessTokenNotification: String = "OAuthReceivedAccessTokenNotification"
-let OAuthClientRefreshedAccessTokenNotification: String = "OAuthRefreshedAccessTokenNotification"
-let OAuthClientFailedNotification: String = "OAuthFailedNotification"
+let OAuthClientReceivedAccessTokenNotification = NSNotification.Name(rawValue: "OAuthReceivedAccessTokenNotification")
+let OAuthClientRefreshedAccessTokenNotification = NSNotification.Name(rawValue: "OAuthRefreshedAccessTokenNotification")
+let OAuthClientFailedNotification = NSNotification.Name(rawValue: "OAuthFailedNotification")
 
 class OAuthClient {
     static let sharedClient = OAuthClient()
     var accessToken: OAuthAccessToken? {
         get {
-            if let accessToken = OAuthAccessToken() {
+            if let accessToken = OAuthAccessToken.unarchive() {
                 if accessToken.hasExpired() {
                     refreshAccessToken(accessToken)
                     return nil
@@ -26,39 +25,39 @@ class OAuthClient {
                 
                 return accessToken
             } else {
-                NotificationCenter.default().post(name: NSNotification.Name(rawValue: OAuthClientFailedNotification), object: nil)
+                NotificationCenter.default.post(name: OAuthClientFailedNotification, object: nil)
                 return nil
             }
         }
     }
     
     func refreshAccessToken(_ accessToken: OAuthAccessToken) {
-        if !accessToken.refreshing {
-            accessToken.refreshing = true
-            
-            Alamofire.request(OAuthRouter.accessTokenFromRefreshToken(refreshToken: accessToken.refreshToken))
-                .responseJSON { response in
-                    switch response.result {
-                        case .success:
-                            if let jsonData = response.result.value {
-                                let json = JSON(jsonData)
-                                if json["error"].string == nil {
-                                    if let accessToken = OAuthAccessToken(json: json) {
-                                        accessToken.save()
-                                    }
-                                
-                                    NotificationCenter.default().post(name: NSNotification.Name(rawValue: OAuthClientRefreshedAccessTokenNotification), object: self.accessToken)
-                                } else {
-                                    self.accessToken?.remove()
-                                    NotificationCenter.default().post(name: NSNotification.Name(rawValue: OAuthClientFailedNotification), object: self.accessToken)
-                                }
-                            }
-                    
-                        case .failure(let error):
-                            NotificationCenter.default().post(name: NSNotification.Name(rawValue: OAuthClientFailedNotification), object: self.accessToken)
-                            NSLog("[\(String(self)), \(#function))] Error: \(error), \(error.userInfo)")
-                    }
-                }
+        if accessToken.refreshing {
+            return
         }
+        
+        accessToken.refreshing = true
+            
+        Alamofire.request(OAuthRouter.accessTokenFromRefreshToken(refreshToken: accessToken.refreshToken))
+            .responseJSON { response in
+                switch response.result {
+                case .success:
+                    if let json = response.result.value as? [String: Any] {
+                        if let error = json["error"] as? String, error.isEmpty {
+                            if let accessToken = OAuthAccessToken(json: json) {
+                                accessToken.archive()
+                            }
+                                
+                            NotificationCenter.default.post(name: OAuthClientRefreshedAccessTokenNotification, object: self.accessToken)
+                        } else {
+                            self.accessToken?.remove()
+                            NotificationCenter.default.post(name: OAuthClientFailedNotification, object: nil)
+                        }
+                    }
+                    
+                case .failure:
+                    NotificationCenter.default.post(name: OAuthClientFailedNotification, object: self.accessToken)
+                }
+            }
     }
 }
