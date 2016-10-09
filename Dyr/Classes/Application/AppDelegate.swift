@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - UIApplicationDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.OAuthClientFailed(_:)), name: OAuthClientFailedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.OAuthClientFailed(_:)), name: OAuthClient.NotificationNames.failed, object: nil)
         
         return true
     }

@@ -2,7 +2,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'Dyr' do
-    pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :branch => 'swift3'
+    pod 'Alamofire'
     pod 'Lockbox'
 end
 

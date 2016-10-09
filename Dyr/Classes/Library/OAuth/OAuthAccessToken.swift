@@ -96,7 +96,7 @@ class OAuthAccessToken: NSObject, NSSecureCoding {
         return Lockbox.unarchiveObject(forKey: OAuthKeychainKey) as? OAuthAccessToken
     }
     
-    func remove() {
+    class func remove() {
         Lockbox.archiveObject(nil, forKey: OAuthKeychainKey)
     }
 }

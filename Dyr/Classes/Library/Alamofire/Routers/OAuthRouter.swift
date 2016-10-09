@@ -10,7 +10,7 @@ import Alamofire
 import Foundation
 
 enum OAuthRouter: URLRequestConvertible {
-    static let baseURL = Constants.value(forKey: "APIBaseURL") + "/oauth"
+    static let baseURLString = Constants.value(forKey: "APIBaseURL") + "/oauth"
     static let clientParameters: [String: Any] = [
         "client_id": Constants.value(forKey: "APIClientID"),
         "client_secret": Constants.value(forKey: "APIClientSecret")
@@ -39,22 +39,20 @@ enum OAuthRouter: URLRequestConvertible {
     
     // MARK: - URLRequestConvertible
     
-    var urlRequest: URLRequest {
-        let encoding = Alamofire.ParameterEncoding.url
-        
-        let (path, parameters): (String, [String: Any]?) = {
+    func asURLRequest() throws -> URLRequest {
+        let result: (path: String, parameters: Parameters) = {
             switch self {
-            case .accessTokenFromCredentials(let username, let password):
-                return ("/token", ["username": username, "password": password, "grant_type": "password"])
-            case .accessTokenFromRefreshToken(let refreshToken):
-                return ("/token", ["refresh_token": refreshToken, "grant_type": "refresh_token"])
+            case let .accessTokenFromCredentials(username, password):
+                return (path, ["username": username, "password": password, "grant_type": "password"])
+            case let .accessTokenFromRefreshToken(refreshToken):
+                return (path, ["refresh_token": refreshToken, "grant_type": "refresh_token"])
             }
         }()
         
-        let url = Foundation.URL(string: OAuthRouter.baseURL)!
-        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+        let url = try OAuthRouter.baseURLString.asURL()
+        var urlRequest = URLRequest(url: url.appendingPathComponent(result.path))
         urlRequest.httpMethod = method.rawValue
         
-        return encoding.encode(urlRequest, parameters: OAuthRouter.clientParameters + parameters!).0
+        return try URLEncoding.default.encode(urlRequest, with: result.parameters)
     }
 }

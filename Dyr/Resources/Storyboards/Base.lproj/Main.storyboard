@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11129.15" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="y1P-CV-cYq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="y1P-CV-cYq">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11103.10"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +17,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" rowHeight="66" id="SNB-Oc-ZTq" customClass="EventTableViewCell" customModule="Dyr" customModuleProvider="target">
-                                <frame key="frameInset" minY="86" width="375" height="66"/>
+                                <rect key="frame" x="0.0" y="86" width="375" height="66"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SNB-Oc-ZTq" id="gmN-UJ-bNH">
                                     <frame key="frameInset" width="375" height="66"/>
@@ -94,7 +94,7 @@
                     <navigationItem key="navigationItem" title="No Connection" id="jUz-2k-020">
                         <barButtonItem key="rightBarButtonItem" enabled="NO" image="Open" id="4mM-gF-Soe">
                             <connections>
-                                <action selector="toggle:" destination="r0W-b2-tWH" id="Hzq-Tg-Ows"/>
+                                <action selector="toggle:" destination="r0W-b2-tWH" id="Gvl-C8-gZX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

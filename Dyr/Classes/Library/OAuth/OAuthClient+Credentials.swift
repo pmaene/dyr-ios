@@ -21,14 +21,14 @@ extension OAuthClient {
                                 accessToken.archive()
                             }
                         
-                            NotificationCenter.default.post(name: OAuthClientReceivedAccessTokenNotification, object: self.accessToken)
+                            NotificationCenter.default.post(name: OAuthClient.NotificationNames.receivedAccessToken, object: self.accessToken)
                         } else {
-                            NotificationCenter.default.post(name: OAuthClientFailedNotification, object: nil)
+                            NotificationCenter.default.post(name: OAuthClient.NotificationNames.failed, object: nil)
                         }
                     }
 
                 case .failure:
-                    NotificationCenter.default.post(name: OAuthClientFailedNotification, object: self.accessToken)
+                    NotificationCenter.default.post(name: OAuthClient.NotificationNames.failed, object: self.accessToken)
                 }
             }
     }

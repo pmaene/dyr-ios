@@ -61,7 +61,9 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
                             
                         case .failure:
                             // TODO: Post notification and show banner
-                            fatalError()
+                            if OAuthAccessToken.unarchive() != nil {
+                                fatalError()
+                            }
                         }
                     }
             } else {
@@ -133,7 +135,9 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
                     
                 case .failure:
                     // TODO: Post notification and show banner
-                    fatalError()
+                    if OAuthAccessToken.unarchive() != nil {
+                        fatalError()
+                    }
                 }
             }
     }
@@ -148,7 +152,7 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
         navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
-    @IBAction func toggle(_ sender: UIBarButtonItem) {
+    @IBAction func toggle(_ sender: UIBarButtonItem) {        
         Alamofire.request(DoorRouter.switch(door: door!))
             .responseJSON { response in
                 switch response.result {
@@ -161,7 +165,9 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
                     
                 case .failure:
                     // TODO: Post notification and show banner
-                    fatalError()
+                    if OAuthAccessToken.unarchive() != nil {
+                        fatalError()
+                    }
                 }
             }
         
@@ -179,7 +185,7 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(DoorViewController.OAuthClientDidRefreshAccessToken(_:)), name: OAuthClientRefreshedAccessTokenNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DoorViewController.OAuthClientDidRefreshAccessToken(_:)), name: OAuthClient.NotificationNames.refreshedAcessToken, object: nil)
         
         initDoor()
         initFetchedResultsController()

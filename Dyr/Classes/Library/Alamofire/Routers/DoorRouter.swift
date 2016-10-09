@@ -10,7 +10,7 @@ import Alamofire
 import Foundation
 
 enum DoorRouter: URLRequestConvertible {
-    static let baseURL = Constants.value(forKey: "APIBaseURL") + "/api/v1/accessories/doors"
+    static let baseURLString = Constants.value(forKey: "APIBaseURL") + "/api/v1/accessories/doors"
     static let clientParameters: [String: Any] = [
         "client_id": Constants.value(forKey: "APIClientID"),
         "client_secret": Constants.value(forKey: "APIClientSecret")
@@ -39,33 +39,25 @@ enum DoorRouter: URLRequestConvertible {
     
     // MARK: - URLRequestConvertible
     
-    var urlRequest: URLRequest {
-        get {
-            let encoding = Alamofire.ParameterEncoding.url
-        
-            let url = Foundation.URL(string: DoorRouter.baseURL)!
-            var urlRequest = URLRequest(url: url.appendingPathComponent(path))
-            urlRequest.httpMethod = method.rawValue
-        
-            var OAuthParameters = Dictionary<String, Any>()
-            if let accessToken = OAuthClient.sharedClient.accessToken {
-                OAuthParameters = ["access_token": accessToken.accessToken]
-            }
-        
-            let parameters: [String: Any]? = {
-                switch self {
-                case .switch(let door):
-                    return ["id": door.identifier]
-                default:
-                    return nil
-                }
-            }()
-        
-            if parameters == nil {
-                return encoding.encode(urlRequest, parameters: DoorRouter.clientParameters + OAuthParameters).0
-            } else {
-                return encoding.encode(urlRequest, parameters: DoorRouter.clientParameters + OAuthParameters + parameters!).0
-            }
+    func asURLRequest() throws -> URLRequest {
+        var OAuthParameters = Dictionary<String, Any>()
+        if let accessToken = OAuthClient.sharedClient.accessToken {
+            OAuthParameters = ["access_token": accessToken.accessToken]
         }
+        
+        let result: (path: String, parameters: Parameters) = {
+            switch self {
+            case .doors:
+                return (path, DoorRouter.clientParameters + OAuthParameters)
+            case let .switch(door):
+                return (path, DoorRouter.clientParameters + OAuthParameters + ["id": door.identifier])
+            }
+        }()
+        
+        let url = try DoorRouter.baseURLString.asURL()
+        var urlRequest = URLRequest(url: url.appendingPathComponent(result.path))
+        urlRequest.httpMethod = method.rawValue
+        
+        return try URLEncoding.default.encode(urlRequest, with: result.parameters)
     }
 }

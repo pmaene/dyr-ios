@@ -67,8 +67,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         username.delegate = self
         password.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.OAuthClientFailed(_:)), name: OAuthClientFailedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.presentNavigationController(_:)), name: OAuthClientReceivedAccessTokenNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.OAuthClientFailed(_:)), name: OAuthClient.NotificationNames.failed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.presentNavigationController(_:)), name: OAuthClient.NotificationNames.receivedAccessToken, object: nil)
     }
     
     // MARK: - UITextFieldDelegate

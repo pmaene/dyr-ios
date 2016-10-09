@@ -9,12 +9,15 @@
 import Alamofire
 import Foundation
 
-let OAuthClientReceivedAccessTokenNotification = NSNotification.Name(rawValue: "OAuthReceivedAccessTokenNotification")
-let OAuthClientRefreshedAccessTokenNotification = NSNotification.Name(rawValue: "OAuthRefreshedAccessTokenNotification")
-let OAuthClientFailedNotification = NSNotification.Name(rawValue: "OAuthFailedNotification")
-
 class OAuthClient {
+    struct NotificationNames {
+        static var receivedAccessToken = NSNotification.Name(rawValue: "OAuthClientReceivedAccessToken")
+        static var refreshedAcessToken = NSNotification.Name(rawValue: "OAuthClientRefreshedAccessToken")
+        static var failed = NSNotification.Name(rawValue: "OAuthClientFailed")
+    }
+    
     static let sharedClient = OAuthClient()
+    
     var accessToken: OAuthAccessToken? {
         get {
             if let accessToken = OAuthAccessToken.unarchive() {
@@ -25,7 +28,7 @@ class OAuthClient {
                 
                 return accessToken
             } else {
-                NotificationCenter.default.post(name: OAuthClientFailedNotification, object: nil)
+                NotificationCenter.default.post(name: NotificationNames.failed, object: nil)
                 return nil
             }
         }
@@ -48,15 +51,15 @@ class OAuthClient {
                                 accessToken.archive()
                             }
                                 
-                            NotificationCenter.default.post(name: OAuthClientRefreshedAccessTokenNotification, object: self.accessToken)
+                            NotificationCenter.default.post(name: NotificationNames.refreshedAcessToken, object: self.accessToken)
                         } else {
-                            self.accessToken?.remove()
-                            NotificationCenter.default.post(name: OAuthClientFailedNotification, object: nil)
+                            OAuthAccessToken.remove()
+                            NotificationCenter.default.post(name: NotificationNames.failed, object: nil)
                         }
                     }
                     
                 case .failure:
-                    NotificationCenter.default.post(name: OAuthClientFailedNotification, object: self.accessToken)
+                    NotificationCenter.default.post(name: NotificationNames.failed, object: self.accessToken)
                 }
             }
     }

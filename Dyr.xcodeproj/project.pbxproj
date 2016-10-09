@@ -81,7 +81,6 @@
 		F56D81FD1ADAA70C00E9A301 /* OAuthRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthRouter.swift; sourceTree = "<group>"; };
 		F56D82021ADAAF0800E9A301 /* Dictionary+SumOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+SumOperator.swift"; sourceTree = "<group>"; };
 		F5AEF4FC1ADA6D0700D78DFE /* OAuthAccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthAccessToken.swift; sourceTree = "<group>"; };
-		F5AEF4FE1ADA8E3300D78DFE /* Dyr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dyr-Bridging-Header.h"; sourceTree = "<group>"; };
 		F5B01DB91AA356A900EF2A2A /* Dyr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dyr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B01DBD1AA356AA00EF2A2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5B01DBE1AA356AA00EF2A2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -226,10 +225,9 @@
 		F5B01DBB1AA356A900EF2A2A /* Dyr */ = {
 			isa = PBXGroup;
 			children = (
-				F5D795D01D6E614C00D49A9B /* Dyr.entitlements */,
 				F5B01DE91AA368D000EF2A2A /* Constants.plist */,
 				F5B01DEA1AA368D000EF2A2A /* Constants.swift */,
-				F5AEF4FE1ADA8E3300D78DFE /* Dyr-Bridging-Header.h */,
+				F5D795D01D6E614C00D49A9B /* Dyr.entitlements */,
 				F5B01DBD1AA356AA00EF2A2A /* Info.plist */,
 				F5B01DE11AA3675900EF2A2A /* Classes */,
 				F5B01DE61AA367B500EF2A2A /* Resources */,
@@ -767,7 +765,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = be.pmaene.ios.Dyr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Dyr/Dyr-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -788,7 +786,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = be.pmaene.ios.Dyr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Dyr/Dyr-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};
