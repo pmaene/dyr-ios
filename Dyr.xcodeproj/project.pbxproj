@@ -9,16 +9,15 @@
 /* Begin PBXBuildFile section */
 		731A45179E767039D5B3B739 /* Pods_Dyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98942B4D46E096C36CB25C9F /* Pods_Dyr.framework */; };
 		9A341651AEEC924B009575AA /* Pods_DyrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE0BFCF4ACA8ADBFFC1BA393 /* Pods_DyrTests.framework */; };
-		F500CC9A1ADAC38100F04786 /* OAuthClient+Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F500CC991ADAC38100F04786 /* OAuthClient+Credentials.swift */; };
+		F500CC9A1ADAC38100F04786 /* JWTClient+Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F500CC991ADAC38100F04786 /* JWTClient+Credentials.swift */; };
 		F500CC9E1ADADD3900F04786 /* DoorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F500CC9D1ADADD3900F04786 /* DoorRouter.swift */; };
 		F50BBB7E1AED3CC100A8150C /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50BBB7D1AED3CC100A8150C /* TimelineView.swift */; };
 		F50F8F361AD595B200E77DCB /* ColoredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F8F351AD595B200E77DCB /* ColoredButton.swift */; };
 		F50F8F381AD595C000E77DCB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F8F371AD595C000E77DCB /* LoginViewController.swift */; };
 		F546459A1D0D931A00DBD937 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54645991D0D931A00DBD937 /* CoreLocation.framework */; };
-		F56D81FA1ADA9ADD00E9A301 /* OAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56D81F91ADA9ADD00E9A301 /* OAuthClient.swift */; };
-		F56D81FE1ADAA70C00E9A301 /* OAuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56D81FD1ADAA70C00E9A301 /* OAuthRouter.swift */; };
+		F56D81FA1ADA9ADD00E9A301 /* JWTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56D81F91ADA9ADD00E9A301 /* JWTClient.swift */; };
+		F56D81FE1ADAA70C00E9A301 /* JWTRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56D81FD1ADAA70C00E9A301 /* JWTRouter.swift */; };
 		F56D82031ADAAF0800E9A301 /* Dictionary+SumOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56D82021ADAAF0800E9A301 /* Dictionary+SumOperator.swift */; };
-		F5AEF4FD1ADA6D0700D78DFE /* OAuthAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF4FC1ADA6D0700D78DFE /* OAuthAccessToken.swift */; };
 		F5B01DBF1AA356AA00EF2A2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DBE1AA356AA00EF2A2A /* AppDelegate.swift */; };
 		F5B01DC21AA356AA00EF2A2A /* Dyr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DC01AA356AA00EF2A2A /* Dyr.xcdatamodeld */; };
 		F5B01DC71AA356AA00EF2A2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5B01DC51AA356AA00EF2A2A /* Main.storyboard */; };
@@ -36,6 +35,8 @@
 		F5B01E041AA36D1900EF2A2A /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01DFC1AA36D1900EF2A2A /* FetchedResultsTableViewController.swift */; };
 		F5B01E081AA36E2C00EF2A2A /* DoorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B01E071AA36E2C00EF2A2A /* DoorViewController.swift */; };
 		F5B6A87B1AED0B6B00177858 /* EventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B6A87A1AED0B6B00177858 /* EventRouter.swift */; };
+		F5BEE26D1EA546CC000F036C /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BEE26C1EA546CC000F036C /* UserRouter.swift */; };
+		F5CA6B611E9D750400C77CBC /* JSONWebToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA6B601E9D750400C77CBC /* JSONWebToken.swift */; };
 		F5DFD5181ADD49DA001445BF /* Accessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DFD5161ADD49DA001445BF /* Accessory.swift */; };
 		F5DFD5191ADD49DA001445BF /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DFD5171ADD49DA001445BF /* Door.swift */; };
 /* End PBXBuildFile section */
@@ -71,16 +72,15 @@
 		B1A9971523D2AB0F9E941D10 /* Pods-Dyr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dyr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dyr/Pods-Dyr.release.xcconfig"; sourceTree = "<group>"; };
 		CFCE3FCF47BBC145DD496750 /* Pods-DyrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DyrTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DyrTests/Pods-DyrTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9080BB2ADD2EDB561F208A8 /* Pods-Dyr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dyr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dyr/Pods-Dyr.debug.xcconfig"; sourceTree = "<group>"; };
-		F500CC991ADAC38100F04786 /* OAuthClient+Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OAuthClient+Credentials.swift"; sourceTree = "<group>"; };
+		F500CC991ADAC38100F04786 /* JWTClient+Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JWTClient+Credentials.swift"; sourceTree = "<group>"; };
 		F500CC9D1ADADD3900F04786 /* DoorRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoorRouter.swift; sourceTree = "<group>"; };
 		F50BBB7D1AED3CC100A8150C /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		F50F8F351AD595B200E77DCB /* ColoredButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColoredButton.swift; sourceTree = "<group>"; };
 		F50F8F371AD595C000E77DCB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F54645991D0D931A00DBD937 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		F56D81F91ADA9ADD00E9A301 /* OAuthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClient.swift; sourceTree = "<group>"; };
-		F56D81FD1ADAA70C00E9A301 /* OAuthRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthRouter.swift; sourceTree = "<group>"; };
+		F56D81F91ADA9ADD00E9A301 /* JWTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTClient.swift; sourceTree = "<group>"; };
+		F56D81FD1ADAA70C00E9A301 /* JWTRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTRouter.swift; sourceTree = "<group>"; };
 		F56D82021ADAAF0800E9A301 /* Dictionary+SumOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+SumOperator.swift"; sourceTree = "<group>"; };
-		F5AEF4FC1ADA6D0700D78DFE /* OAuthAccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthAccessToken.swift; sourceTree = "<group>"; };
 		F5B01DB91AA356A900EF2A2A /* Dyr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dyr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B01DBD1AA356AA00EF2A2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5B01DBE1AA356AA00EF2A2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +102,8 @@
 		F5B01DFC1AA36D1900EF2A2A /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
 		F5B01E071AA36E2C00EF2A2A /* DoorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoorViewController.swift; sourceTree = "<group>"; };
 		F5B6A87A1AED0B6B00177858 /* EventRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRouter.swift; sourceTree = "<group>"; };
+		F5BEE26C1EA546CC000F036C /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
+		F5CA6B601E9D750400C77CBC /* JSONWebToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONWebToken.swift; sourceTree = "<group>"; };
 		F5D795D01D6E614C00D49A9B /* Dyr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dyr.entitlements; sourceTree = "<group>"; };
 		F5DFD5161ADD49DA001445BF /* Accessory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessory.swift; sourceTree = "<group>"; };
 		F5DFD5171ADD49DA001445BF /* Door.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Door.swift; sourceTree = "<group>"; };
@@ -179,7 +181,8 @@
 			children = (
 				F500CC9D1ADADD3900F04786 /* DoorRouter.swift */,
 				F5B6A87A1AED0B6B00177858 /* EventRouter.swift */,
-				F56D81FD1ADAA70C00E9A301 /* OAuthRouter.swift */,
+				F56D81FD1ADAA70C00E9A301 /* JWTRouter.swift */,
+				F5BEE26C1EA546CC000F036C /* UserRouter.swift */,
 			);
 			path = Routers;
 			sourceTree = "<group>";
@@ -192,13 +195,14 @@
 			path = Dictionary;
 			sourceTree = "<group>";
 		};
-		F5AEF4FB1ADA6CEB00D78DFE /* OAuth */ = {
+		F5AEF4FB1ADA6CEB00D78DFE /* JWT */ = {
 			isa = PBXGroup;
 			children = (
-				F5AEF4FC1ADA6D0700D78DFE /* OAuthAccessToken.swift */,
-				F56D81F91ADA9ADD00E9A301 /* OAuthClient.swift */,
-				F500CC991ADAC38100F04786 /* OAuthClient+Credentials.swift */,
+				F5CA6B601E9D750400C77CBC /* JSONWebToken.swift */,
+				F56D81F91ADA9ADD00E9A301 /* JWTClient.swift */,
+				F500CC991ADAC38100F04786 /* JWTClient+Credentials.swift */,
 			);
+			name = JWT;
 			path = OAuth;
 			sourceTree = "<group>";
 		};
@@ -288,7 +292,7 @@
 				F5B01DF31AA36D1900EF2A2A /* Color */,
 				F56D82041ADAAF0D00E9A301 /* Dictionary */,
 				F5B01DF61AA36D1900EF2A2A /* Navigation */,
-				F5AEF4FB1ADA6CEB00D78DFE /* OAuth */,
+				F5AEF4FB1ADA6CEB00D78DFE /* JWT */,
 				F5B01DF81AA36D1900EF2A2A /* TableView */,
 				F50BBB7C1AED3CB300A8150C /* View */,
 			);
@@ -606,11 +610,10 @@
 				F5B01DF01AA36B8D00EF2A2A /* User.swift in Sources */,
 				F5B01E001AA36D1900EF2A2A /* UIColor+Dyr.swift in Sources */,
 				F5B01DBF1AA356AA00EF2A2A /* AppDelegate.swift in Sources */,
-				F500CC9A1ADAC38100F04786 /* OAuthClient+Credentials.swift in Sources */,
+				F500CC9A1ADAC38100F04786 /* JWTClient+Credentials.swift in Sources */,
 				F5B01DC21AA356AA00EF2A2A /* Dyr.xcdatamodeld in Sources */,
 				F5DFD5191ADD49DA001445BF /* Door.swift in Sources */,
 				F5B6A87B1AED0B6B00177858 /* EventRouter.swift in Sources */,
-				F5AEF4FD1ADA6D0700D78DFE /* OAuthAccessToken.swift in Sources */,
 				F5B01E021AA36D1900EF2A2A /* NavigationController.swift in Sources */,
 				F5B01DEC1AA368D000EF2A2A /* Constants.swift in Sources */,
 				F500CC9E1ADADD3900F04786 /* DoorRouter.swift in Sources */,
@@ -618,9 +621,11 @@
 				F5B01E041AA36D1900EF2A2A /* FetchedResultsTableViewController.swift in Sources */,
 				F50BBB7E1AED3CC100A8150C /* TimelineView.swift in Sources */,
 				F5DFD5181ADD49DA001445BF /* Accessory.swift in Sources */,
-				F56D81FA1ADA9ADD00E9A301 /* OAuthClient.swift in Sources */,
+				F56D81FA1ADA9ADD00E9A301 /* JWTClient.swift in Sources */,
+				F5BEE26D1EA546CC000F036C /* UserRouter.swift in Sources */,
 				F5B01DEF1AA36B8D00EF2A2A /* Event.swift in Sources */,
-				F56D81FE1ADAA70C00E9A301 /* OAuthRouter.swift in Sources */,
+				F5CA6B611E9D750400C77CBC /* JSONWebToken.swift in Sources */,
+				F56D81FE1ADAA70C00E9A301 /* JWTRouter.swift in Sources */,
 				F5B01E081AA36E2C00EF2A2A /* DoorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -753,19 +758,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D9080BB2ADD2EDB561F208A8 /* Pods-Dyr.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Dyr/Dyr.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				DEVELOPMENT_TEAM = K5R37XWE45;
 				INFOPLIST_FILE = Dyr/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = be.pmaene.ios.Dyr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -774,20 +771,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B1A9971523D2AB0F9E941D10 /* Pods-Dyr.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Dyr/Dyr.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				DEVELOPMENT_TEAM = K5R37XWE45;
 				INFOPLIST_FILE = Dyr/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = be.pmaene.ios.Dyr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -1,5 +1,5 @@
 //
-//  DyrNavigationController.swift
+//  NavigationController.swift
 //  Dyr
 //
 //  Created by Pieter Maene on 08/11/14.

@@ -8,25 +8,26 @@
 
 import Alamofire
 import Foundation
+import JWTDecode
 
-class OAuthClient {
+class JWTClient {
     struct NotificationNames {
-        static var receivedAccessToken = NSNotification.Name(rawValue: "OAuthClientReceivedAccessToken")
-        static var refreshedAcessToken = NSNotification.Name(rawValue: "OAuthClientRefreshedAccessToken")
-        static var failed = NSNotification.Name(rawValue: "OAuthClientFailed")
+        static var receivedToken = NSNotification.Name(rawValue: "JWTClientReceivedToken")
+        static var refreshedToken = NSNotification.Name(rawValue: "JWTClientRefreshedToken")
+        static var failed = NSNotification.Name(rawValue: "JWTClientFailed")
     }
     
-    static let sharedClient = OAuthClient()
+    static let sharedClient = JWTClient()
     
-    var accessToken: OAuthAccessToken? {
+    var token: JSONWebToken? {
         get {
-            if let accessToken = OAuthAccessToken.unarchive() {
-                if accessToken.hasExpired() {
-                    refreshAccessToken(accessToken)
+            if let token = JSONWebToken.unarchive() {
+                if token.willExpire() {
+                    refreshToken(token)
                     return nil
                 }
                 
-                return accessToken
+                return token
             } else {
                 NotificationCenter.default.post(name: NotificationNames.failed, object: nil)
                 return nil
@@ -34,13 +35,7 @@ class OAuthClient {
         }
     }
     
-    func refreshAccessToken(_ accessToken: OAuthAccessToken) {
-        if accessToken.refreshing {
-            return
-        }
-        
-        accessToken.refreshing = true
-            
+    func refresh(withToken token: JSONWebToken) {
         Alamofire.request(OAuthRouter.accessTokenFromRefreshToken(refreshToken: accessToken.refreshToken))
             .responseJSON { response in
                 switch response.result {

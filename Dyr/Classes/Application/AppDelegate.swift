@@ -8,6 +8,7 @@
 
 import CoreData
 import Foundation
+import SwiftDate
 import UIKit
 
 @UIApplicationMain
@@ -18,31 +19,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         
-        if !(window?.rootViewController is LoginViewController) {
-            if let window = window {
-                UIView.transition(
-                    with: window,
-                    duration: 0.5,
-                    options: .transitionFlipFromLeft,
-                    animations: {
-                        window.rootViewController = loginViewController
-                    },
-                    completion: { (finished: Bool) -> () in }
-                )
-            }
+        if let window = window, !(window.rootViewController is LoginViewController) {
+            UIView.transition(
+                with: window,
+                duration: 0.5,
+                options: .transitionFlipFromLeft,
+                animations: {
+                    window.rootViewController = loginViewController
+                },
+                completion: { (finished: Bool) -> () in }
+            )
         }
     }
     
-    func OAuthClientFailed(_ notification: Notification) {
+    func JWTClientFailed(_ notification: Notification) {
         presentLoginViewController()
     }
     
     // MARK: - UIApplicationDelegate
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.OAuthClientFailed(_:)), name: OAuthClient.NotificationNames.failed, object: nil)
-        
-        return true
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        Date.setDefaultRegion(Region(tz: NSTimeZone.local, cal: .current, loc: .current))
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.JWTClientFailed(_:)), name: JWTClient.NotificationNames.failed, object: nil)
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        do {
+            guard let managedObjectContext = managedObjectContext else {
+                return
+            }
+            
+            try managedObjectContext.save()
+        } catch {
+            // TODO: Error
+            fatalError()
+        }
     }
     
     // MARK: - Core Data Stack
@@ -66,16 +77,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             fatalError()
         }
     }()
-    
-    func saveContext () {
-        if let managedObjectContext = self.managedObjectContext {
-            do {
-                if managedObjectContext.hasChanges {
-                    try managedObjectContext.save()
-                }
-            } catch {
-                fatalError()
-            }
-        }
-    }
 }

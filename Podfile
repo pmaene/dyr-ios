@@ -3,7 +3,10 @@ use_frameworks!
 
 target 'Dyr' do
     pod 'Alamofire'
-    pod 'Lockbox'
+    pod 'JWTDecode'
+    pod 'PureLayout'
+    pod 'Strongbox'
+    pod 'SwiftDate'
 end
 
 target 'DyrTests' do

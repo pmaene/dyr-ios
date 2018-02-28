@@ -206,7 +206,7 @@ class DoorViewController: FetchedResultsTableViewController, CLLocationManagerDe
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let event = fetchedResultsController.object(at: indexPath) as! Event
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
-        cell.updateOutlets(event)
+        cell.event = event
         
         return cell
     }

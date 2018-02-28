@@ -1,29 +1,29 @@
 //
-//  EventRouter.swift
+//  UserRouter.swift
 //  Dyr
 //
-//  Created by Pieter Maene on 26/04/15.
-//  Copyright (c) 2015. All rights reserved.
+//  Created by Pieter Maene on 17/04/2017.
+//
 //
 
 import Alamofire
 import Foundation
 
-enum EventRouter: URLRequestConvertible {
-    static let baseURLString = Constants.value(forKey: "APIBaseURL") + "/api/v1/events"
+enum UserRouter: URLRequestConvertible {
+    static let baseURLString = Constants.value(forKey: "APIBaseURL") + "/api/v1/users/"
     
-    case events(accessory: Accessory)
+    case users(username: String)
     
     var method: HTTPMethod {
         switch self {
-        case .events:
+        case .users:
             return .get
         }
     }
     
     var path: String {
         switch self {
-        case .events:
+        case .users:
             return "/"
         }
     }
@@ -33,8 +33,8 @@ enum EventRouter: URLRequestConvertible {
     func asURLRequest() throws -> URLRequest {
         let result: (path: String, parameters: Parameters) = {
             switch self {
-            case let .events(accessory):
-                return (path, ["accessory": accessory.identifier])
+            case let .users(username):
+                return (path + "/\(username)", [:])
             }
         }()
         

@@ -1,5 +1,5 @@
 //
-//  DoorRouter.swift
+//  JWTRouter
 //  Dyr
 //
 //  Created by Pieter Maene on 12/04/15.
@@ -9,27 +9,27 @@
 import Alamofire
 import Foundation
 
-enum DoorRouter: URLRequestConvertible {
-    static let baseURLString = Constants.value(forKey: "APIBaseURL") + "/api/v1/accessories/doors"
+enum JWTRouter: URLRequestConvertible {
+    static let baseURLString = Constants.value(forKey: "APIBaseURL") + "/api/v1/auth"
     
-    case doors()
-    case `switch`(door: Door)
+    case login(username: String, password: String)
+    case refresh(token: String)
     
     var method: HTTPMethod {
         switch self {
-        case .doors:
-            return .get
-        case .switch:
+        case .login:
             return .post
+        case .refresh:
+            return .get
         }
     }
     
     var path: String {
         switch self {
-        case .doors:
-            return "/"
-        case .switch:
-            return "/"
+        case .login:
+            return "/login"
+        case .refresh:
+            return "/refresh"
         }
     }
     
@@ -38,19 +38,19 @@ enum DoorRouter: URLRequestConvertible {
     func asURLRequest() throws -> URLRequest {
         let result: (path: String, parameters: Parameters) = {
             switch self {
-            case .doors:
+            case let .login(username, password):
+                return (path, ["username": username, "password": password])
+            case .refresh(_):
                 return (path, [:])
-            case let .switch(door):
-                return (path + , [:])
             }
         }()
         
-        let url = try DoorRouter.baseURLString.asURL()
+        let url = try JWTRouter.baseURLString.asURL()
         var urlRequest = URLRequest(url: url.appendingPathComponent(result.path))
         urlRequest.httpMethod = method.rawValue
         
-        if let token = JWTClient.sharedClient.token {
-            urlRequest.setValue("Bearer \(token.rawValue)", forHTTPHeaderField: "Authorization")
+        if case let .refresh(token) = self {
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
         return try URLEncoding.default.encode(urlRequest, with: result.parameters)

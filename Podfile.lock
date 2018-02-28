@@ -1,0 +1,24 @@
+PODS:
+  - Alamofire (4.4.0)
+  - JWTDecode (2.0.0)
+  - PureLayout (3.0.2)
+  - Strongbox (0.3.1)
+  - SwiftDate (4.1.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - JWTDecode
+  - PureLayout
+  - Strongbox
+  - SwiftDate
+
+SPEC CHECKSUMS:
+  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  JWTDecode: 178e47e5d28d3abcff778bacced8342858cd6cb5
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Strongbox: 5018f3291e1102b4c11fab25d9e8494712e3d102
+  SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
+
+PODFILE CHECKSUM: b258d29bd9f59ae2fb56ac9070ab6de1b367c593
+
+COCOAPODS: 1.2.0

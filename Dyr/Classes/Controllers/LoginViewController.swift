@@ -14,10 +14,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginFailed: UILabel!
     
     @IBAction func login(_ sender: AnyObject) {
-        OAuthClient.sharedClient.accessTokenWithCredentials(username: username.text!, password: password.text!)
+        guard let username = username.text, let password = password.text else {
+            return
+        }
+        
+        JWTClient.sharedClient.login(withCredentials: username, password: password)
     }
     
-    func OAuthClientFailed(_ notification: Notification) {
+    func JWTClientFailed(_ notification: Notification) {
         showLoginFailed()
     }
     
@@ -58,6 +62,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         )
     }
     
+    // MARK: - UITextFieldDelegate
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        hideLoginFailed()
+        return true
+    }
+    
     // MARK: - UIViewController
     
     override func viewDidLoad() {
@@ -67,14 +78,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         username.delegate = self
         password.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.OAuthClientFailed(_:)), name: OAuthClient.NotificationNames.failed, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.presentNavigationController(_:)), name: OAuthClient.NotificationNames.receivedAccessToken, object: nil)
-    }
-    
-    // MARK: - UITextFieldDelegate
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        hideLoginFailed()
-        return true
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.JWTClientFailed(_:)), name: JWTClient.NotificationNames.failed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.presentNavigationController(_:)), name: JWTClient.NotificationNames.receivedToken, object: nil)
     }
 }

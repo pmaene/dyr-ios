@@ -21,53 +21,9 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
     
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = NSFetchedResultsController() {
         didSet {
-            initFetchedResultsController()
+            fetchedResultsController.delegate = self
+            performFetch()
         }
-    }
-    
-    private func initFetchedResultsController() {
-        fetchedResultsController.delegate = self
-        performFetch()
-    }
-    
-    // MARK: - NSFetchedResultsControllerDelegate
-    
-    func performFetch() {
-        do {
-            try fetchedResultsController.performFetch()
-            tableView.reloadData()
-        } catch {
-            fatalError()
-        }
-    }
-    
-    // MARK: - UITableViewDataSource
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sections = fetchedResultsController.sections else {
-            return 0
-        }
-        
-        return sections.count
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var rows = 0
-        if let sections = fetchedResultsController.sections, sections.count > 0 {
-            if let sections = self.fetchedResultsController.sections {
-                rows = (sections[section] as NSFetchedResultsSectionInfo).numberOfObjects
-            }
-        }
-        
-        return rows
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let sections = fetchedResultsController.sections else {
-            return nil
-        }
-        
-        return (sections[section] as NSFetchedResultsSectionInfo).name
     }
     
     // MARK: - NSFetchedResultsControllerDelegate
@@ -106,5 +62,43 @@ class FetchedResultsTableViewController: UITableViewController, NSFetchedResults
             self.tableView.deleteRows(at: [indexPath!], with: UITableViewRowAnimation.fade)
             self.tableView.insertRows(at: [newIndexPath!], with: UITableViewRowAnimation.fade)
         }
+    }
+    
+    func performFetch() {
+        do {
+            try fetchedResultsController.performFetch()
+            tableView.reloadData()
+        } catch {
+            fatalError()
+        }
+    }
+    
+    // MARK: - UITableViewDataSource
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        guard let sections = fetchedResultsController.sections else {
+            return 0
+        }
+        
+        return sections.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var rows = 0
+        if let sections = fetchedResultsController.sections, sections.count > 0 {
+            if let sections = self.fetchedResultsController.sections {
+                rows = (sections[section] as NSFetchedResultsSectionInfo).numberOfObjects
+            }
+        }
+        
+        return rows
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let sections = fetchedResultsController.sections else {
+            return nil
+        }
+        
+        return (sections[section] as NSFetchedResultsSectionInfo).name
     }
 }
